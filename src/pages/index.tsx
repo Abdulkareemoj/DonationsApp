@@ -16,52 +16,62 @@ export default function Home() {
       <Head>
         <title>Donations</title>
       </Head>
-      <div>
-        <main>
+
+      <main className="full-w flex flex-col items-center">
+        <div>
+          <h1 className=" flex flex-row">
+            Send a donation
+            {presets.map((preset) => {
+              return (
+                <button
+                  className="mx-2 gap-5 rounded-xl bg-blue-600 px-5 text-white"
+                  key={preset}
+                  onClick={() => setQuantity(preset)}
+                >
+                  {preset}
+                </button>
+              );
+            })}
+          </h1>
+        </div>
+        <div className=" flex flex-col">
+          <h1>You can also specify an amount(max: 10000)</h1>
+          <input
+            className="rounded border border-blue-600 p-2 shadow"
+            type="number"
+            onChange={(e) => setQuantity(parseFloat(e.target.value))}
+            value={quantity}
+            min={1}
+            max={MAX_DONATION_IN_NAIRA / DONATION_IN_NAIRA}
+          />
+        </div>
+
+        <div>
           <div>
-            <h1>
-              Send a donation
-              {presets.map((preset) => {
-                return (
-                  <button key={preset} onClick={() => setQuantity(preset)}>
-                    {preset}
-                  </button>
-                );
-              })}
-              <h1>
-                You can also specify an amount(max: 10000)
-                <input
-                  type="number"
-                  onChange={(e) => setQuantity(parseFloat(e.target.value))}
-                  value={quantity}
-                  min={1}
-                  max={MAX_DONATION_IN_NAIRA / DONATION_IN_NAIRA}
-                />
-              </h1>
-            </h1>
-            <div>
-              <div>
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  id="name"
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
-                />
-              </div>
-              <div>
-                <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  onChange={(e) => setMessage(e.target.value)}
-                  value={message}
-                />
-              </div>
-            </div>
+            <label htmlFor="name">Name</label>
+            <input
+              className="rounded border border-blue-600 p-2 shadow"
+              type="text"
+              id="name"
+              onChange={(e) => setName(e.target.value)}
+              value={name}
+            />
           </div>
-          <button>Donate #{quantity * (DONATION_IN_NAIRA / 100)}</button>
-        </main>
-      </div>
+          <div>
+            <label htmlFor="message">Message</label>
+            <textarea
+              className="rounded border border-blue-600 p-2 shadow"
+              id="message"
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
+            />
+          </div>
+        </div>
+
+        <button className="rounded-md bg-blue-600 px-5 text-white">
+          Donate #{quantity * (DONATION_IN_NAIRA / 100)}
+        </button>
+      </main>
     </>
   );
 }
