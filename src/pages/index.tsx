@@ -2,7 +2,7 @@ import Image from "next/image";
 // import { Inter } from '@next/font/google'
 import Head from "next/head";
 import { useState } from "react";
-import { DONATION_IN_KOBO, MAX_DONATION_IN_KOBO } from "../../config";
+import { DONATION_IN_NAIRA, MAX_DONATION_IN_NAIRA } from "../../config";
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
   const [error, setError] = useState(null);
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
-  const presets = [1, 2, 5];
+  const presets = [100, 200, 500, 1000];
   return (
     <>
       <Head>
@@ -28,13 +28,16 @@ export default function Home() {
                   </button>
                 );
               })}
-              <input
-                type="number"
-                onChange={(e) => setQuantity(parseFloat(e.target.value))}
-                value={quantity}
-                min={1}
-                max={MAX_DONATION_IN_KOBO / DONATION_IN_KOBO}
-              />
+              <h1>
+                You can also specify an amount(max: 10000)
+                <input
+                  type="number"
+                  onChange={(e) => setQuantity(parseFloat(e.target.value))}
+                  value={quantity}
+                  min={1}
+                  max={MAX_DONATION_IN_NAIRA / DONATION_IN_NAIRA}
+                />
+              </h1>
             </h1>
             <div>
               <div>
@@ -56,7 +59,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <button>Donate #{quantity * (DONATION_IN_KOBO / 100)}</button>
+          <button>Donate #{quantity * (DONATION_IN_NAIRA / 100)}</button>
         </main>
       </div>
     </>
