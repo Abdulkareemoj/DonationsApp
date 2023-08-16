@@ -3,6 +3,12 @@ import Image from "next/image";
 import Head from "next/head";
 import { useState } from "react";
 import { DONATION_IN_NAIRA, MAX_DONATION_IN_NAIRA } from "../../config";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+
 // const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -23,21 +29,16 @@ export default function Home() {
             Send a donation
             {presets.map((preset) => {
               return (
-                <button
-                  className="mx-2 gap-5 rounded-xl bg-blue-600 px-5 text-white"
-                  key={preset}
-                  onClick={() => setQuantity(preset)}
-                >
+                <Button key={preset} onClick={() => setQuantity(preset)}>
                   {preset}
-                </button>
+                </Button>
               );
             })}
           </h1>
         </div>
         <div className=" flex flex-col">
           <h1>You can also specify an amount(max: 10000)</h1>
-          <input
-            className="rounded border border-blue-600 p-2 shadow"
+          <Input
             type="number"
             onChange={(e) => setQuantity(parseFloat(e.target.value))}
             value={quantity}
@@ -48,8 +49,8 @@ export default function Home() {
 
         <div>
           <div>
-            <label htmlFor="name">Name</label>
-            <input
+            <Label htmlFor="name">Name</Label>
+            <Input
               className="rounded border border-blue-600 p-2 shadow"
               type="text"
               id="name"
@@ -58,8 +59,8 @@ export default function Home() {
             />
           </div>
           <div>
-            <label htmlFor="message">Message</label>
-            <textarea
+            <Label htmlFor="message">Message</Label>
+            <Textarea
               className="rounded border border-blue-600 p-2 shadow"
               id="message"
               onChange={(e) => setMessage(e.target.value)}
@@ -68,9 +69,9 @@ export default function Home() {
           </div>
         </div>
 
-        <button className="rounded-md bg-blue-600 px-5 text-white">
-          Donate #{quantity * (DONATION_IN_NAIRA / 100)}
-        </button>
+        <Button asChild>
+          <Link href="#"> Donate #{quantity * (DONATION_IN_NAIRA / 100)}</Link>
+        </Button>
       </main>
     </>
   );
