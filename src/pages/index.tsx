@@ -42,7 +42,7 @@ export default function Home() {
             type="number"
             onChange={(e) => setQuantity(parseFloat(e.target.value))}
             value={quantity}
-            min={1}
+            min={100}
             max={MAX_DONATION_IN_NAIRA / DONATION_IN_NAIRA}
           />
         </div>
