@@ -1,39 +1,53 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
 import Paystack from "paystack";
+
 const paystack = Paystack("SECRET_KEY");
 
-
 type Data = {
-  message: string
-}
+  message: string;
+};
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data>,
 ) {
-  if (req.method !== "POST"){
-      res.status(405).json({ message: 'Method not allowed' })
+  if (req.method !== "POST") {
+    res.status(405).json({ message: "Method not allowed" });
+    return;
   }
-const name = req.body.name || "Anonymous"
-const message = req.body.message || ""
-const quantity = req.body .quantity || 1 
-//write error handling for if quantity doesnt exist
 
+  const name = req.body.name || "Anonymous";
+  const message = req.body.message || "";
+  const quantity = req.body.quantity;
+  const amountInKobo = (parseFloat(req.body.amount) * 100).toFixed(0);
+  const email = req.body.email;
+  const reference = req.body.reference;
 
-try{
-const session = paystack.transaction.initialize({
-    name: "Transaction or product name",
-    email: "The user email",
-    amount: amount * 100, // this because paystack also send kobo
-    quantity: "quantity of product just for reference purposes",
-    callback_url: "redirect URL"
-    metadata:{
-         //other information you want to send with the transaction and check when verifying
-         userId: ""
-     }
-  }).then(async(transaction) =>{
-  console.log(transaction)
-}}catch(e){}
-res.status(200).json()
+  if (!quantity) {
+    res.status(400).json({ message: "Quantity is required" });
+    return;
+  }
+
+  try {
+    // const amount = 1000; // Replace with the actual amount of the product
+    const session = await paystack.transaction.initialize({
+      name: "Transaction or product name",
+      amount: amountInKobo,
+      email: email,
+      reference: reference,
+      metadata: {
+        recordId: req.body.recordId,
+      },
+      quantity: quantity,
+      callback_url: "redirect URL",
+      channels: ["card", "bank", "ussd", "qr", "mobile_money", "bank_transfer"],
+    });
+    console.log(session);
+    res.status(200).json({ message: "Transaction initialized successfully" });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({
+      message: "An error occurred while initializing transaction",
+    });
+  }
 }
