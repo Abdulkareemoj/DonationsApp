@@ -18,7 +18,7 @@ export default async function handler(
 
   const name = req.body.name || "Anonymous";
   const message = req.body.message || "";
-  const quantity = req.body.quantity;
+  const quantity = req.body.quantity || 1;
   const amountInKobo = (parseFloat(req.body.amount) * 100).toFixed(0);
   const email = req.body.email;
   const reference = req.body.reference;
@@ -31,23 +31,34 @@ export default async function handler(
   try {
     // const amount = 1000; // Replace with the actual amount of the product
     const session = await paystack.transaction.initialize({
-      name: "Transaction or product name",
+      name: "Donation",
       amount: amountInKobo,
       email: email,
       reference: reference,
       metadata: {
         recordId: req.body.recordId,
+        name,
+        message,
       },
       quantity: quantity,
       callback_url: "redirect URL",
       channels: ["card", "bank", "ussd", "qr", "mobile_money", "bank_transfer"],
+      // success-url:
+      // cancel-url:
     });
+    const url = session.url;
+    if (url) {
+      return res.status(200).send({ url });
+    }
+
     console.log(session);
-    res.status(200).json({ message: "Transaction initialized successfully" });
+    return res.status(200).json({
+      message: "Transaction initialized successfully",
+    });
   } catch (e) {
     console.error(e);
     res.status(500).json({
-      message: "An error occurred while initializing transaction",
+      message: "An error occurred while initializing transaction" + e,
     });
   }
 }
