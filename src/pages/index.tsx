@@ -1,90 +1,12 @@
-// import Image from "next/image";
-// // import { Inter } from '@next/font/google'
-// import Head from "next/head";
-// import { useState } from "react";
-// import { DONATION_IN_NAIRA, MAX_DONATION_IN_NAIRA } from "../../config";
-// import { Button } from "@/components/ui/button";
-// import Link from "next/link";
-// import { Input } from "@/components/ui/input";
-// import { Label } from "@/components/ui/label";
-// import { Textarea } from "@/components/ui/textarea";
-
-// // const inter = Inter({ subsets: ['latin'] })
-
-// export default function Home() {
-//   const [quantity, setQuantity] = useState(1);
-//   const [error, setError] = useState(null);
-//   const [name, setName] = useState("");
-//   const [message, setMessage] = useState("");
-//   const presets = [100, 200, 500, 1000];
-//   return (
-//     <>
-//       <Head>
-//         <title>Donations</title>
-//       </Head>
-
-//       <main className="full-w flex flex-col items-center">
-//         <div>
-//           <h1 className=" flex flex-row">
-//             Send a donation
-//             {presets.map((preset) => {
-//               return (
-//                 <Button key={preset} onClick={() => setQuantity(preset)}>
-//                   {preset}
-//                 </Button>
-//               );
-//             })}
-//           </h1>
-//         </div>
-//         <div className=" flex flex-col">
-//           <h1>You can also specify an amount(max: 10000)</h1>
-//           <Input
-//             type="number"
-//             onChange={(e) => setQuantity(parseFloat(e.target.value))}
-//             value={quantity}
-//             min={100}
-//             max={MAX_DONATION_IN_NAIRA / DONATION_IN_NAIRA}
-//           />
-//         </div>
-
-//         <div>
-//           <div>
-//             <Label htmlFor="name">Name</Label>
-//             <Input
-//               className="rounded border border-blue-600 p-2 shadow"
-//               type="text"
-//               id="name"
-//               onChange={(e) => setName(e.target.value)}
-//               value={name}
-//             />
-//           </div>
-//           <div>
-//             <Label htmlFor="message">Message</Label>
-//             <Textarea
-//               className="rounded border border-blue-600 p-2 shadow"
-//               id="message"
-//               onChange={(e) => setMessage(e.target.value)}
-//               value={message}
-//             />
-//           </div>
-//         </div>
-
-//         <Button asChild>
-//           <Link href="#"> Donate #{quantity * (DONATION_IN_NAIRA / 100)}</Link>
-//         </Button>
-//       </main>
-//     </>
-//   );
-// }
+import { useState } from "react";
 
 import Head from "next/head";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-
+import { useRouter } from "next/router";
 const MAX_DONATION_IN_NAIRA = 10000;
 const DONATION_IN_NAIRA = 100;
 
@@ -92,25 +14,89 @@ const DonationForm = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [quantity, setQuantity] = useState(0);
-
+  const [error, setError] = useState(null);
+  const [email, setEmail] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [quantityError, setQuantityError] = useState("");
+  const router = useRouter();
   const presets = [100, 500, 1000, 5000];
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
     if (value >= 100 && value <= MAX_DONATION_IN_NAIRA) {
       setQuantity(parseFloat(value.toFixed(2)));
+      setQuantityError("");
+    } else {
+      setQuantityError(
+        `Amount must be between ${DONATION_IN_NAIRA} and ${MAX_DONATION_IN_NAIRA}.`
+      );
     }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.trim() === "") {
+      setNameError("Name is required.");
+    } else {
+      setNameError("");
+    }
+    setName(value);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+    setEmail(value);
   };
 
   const handlePresetClick = (value: number) => {
     setQuantity(value);
+    setQuantityError("");
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!name || !email || !quantity) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    if (nameError || emailError || quantityError) {
+      alert("Please fix the errors in the form.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, message, amount: quantity }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+
+      if (!data.ok) {
+        setError(data.error);
+        return;
+      }
+      const url = data.url;
+      router.push(url);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
-      <Head>
-        <title>Donations</title>
-      </Head>
       <main className="full-w flex flex-col items-center">
         <div className="flex flex-col space-y-4">
           <div className="flex flex-col space-y-2">
@@ -131,7 +117,11 @@ const DonationForm = () => {
               onChange={handleQuantityChange}
               min={100}
               max={MAX_DONATION_IN_NAIRA}
+              required
             />
+            {quantityError && (
+              <span className="text-red-500">{quantityError}</span>
+            )}
           </div>
           <div className="flex flex-col space-y-2">
             <Label htmlFor="name">Name:</Label>
@@ -139,8 +129,21 @@ const DonationForm = () => {
               type="text"
               id="name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleNameChange}
+              required
             />
+            {nameError && <span className="text-red-500">{nameError}</span>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="email">Email:</Label>
+            <Input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {emailError && <span className="text-red-500">{emailError}</span>}
           </div>
           <div className="flex flex-col space-y-2">
             <Label htmlFor="message">Message:</Label>
@@ -151,7 +154,7 @@ const DonationForm = () => {
             />
           </div>
         </div>
-        <Button asChild>
+        <Button asChild type="submit" onClick={handleSubmit}>
           <Link href="#"> Donate #{quantity * (DONATION_IN_NAIRA / 100)}</Link>
         </Button>
       </main>
