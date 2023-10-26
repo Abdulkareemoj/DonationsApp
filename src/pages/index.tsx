@@ -61,6 +61,7 @@ const DonationForm = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError(null)
 
     if (!name || !email || !quantity) {
       alert("Please fill in all required fields.");
