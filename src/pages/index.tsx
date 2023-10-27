@@ -59,9 +59,9 @@ const DonationForm = () => {
     setQuantityError("");
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEventHandler<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null)
+    setError(null);
 
     if (!name || !email || !quantity) {
       alert("Please fill in all required fields.");
@@ -147,7 +147,7 @@ const DonationForm = () => {
             {emailError && <span className="text-red-500">{emailError}</span>}
           </div>
           <div className="flex flex-col space-y-2">
-            <Label htmlFor="message">Message:</Label>
+            <Label htmlFor="message">Message: </Label>
             <Textarea
               id="message"
               value={message}
