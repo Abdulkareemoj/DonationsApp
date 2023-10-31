@@ -1,3 +1,5 @@
+import { Button } from "./ui/button";
+
 const Header = () => {
   return (
     <>
@@ -25,7 +27,7 @@ const Header = () => {
             <span className="ml-3 text-xl">Tailwind Snippets</span>
           </a>
           <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
-            <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
+            <Button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
               Button
               <svg
                 fill="none"
@@ -38,7 +40,7 @@ const Header = () => {
               >
                 <path d="M5 12h14M12 5l7 7-7 7"></path>
               </svg>
-            </button>
+            </Button>
           </div>
         </div>
       </header>
