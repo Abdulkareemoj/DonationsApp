@@ -60,7 +60,7 @@ const DonationForm = () => {
     setQuantityError("");
   };
 
-  const handleSubmit = async (event: FormEventHandler<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
 
@@ -154,7 +154,7 @@ const DonationForm = () => {
           />
         </div>
       </div>
-      <Button asChild type="submit" onClick={handleSubmit}>
+      <Button onClick={handleSubmit}>
         <Link href="#"> Donate #{quantity * (DONATION_IN_NAIRA / 100)}</Link>
       </Button>
     </main>
