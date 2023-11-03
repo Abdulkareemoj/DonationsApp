@@ -97,7 +97,7 @@ const DonationForm = () => {
     }
   };
   return (
-    <main className="full-w flex flex-col items-center">
+    <main className="full-w flex flex-col mx-20 ">
       <div className="flex flex-col space-y-4">
         <div className="flex flex-col space-y-2">
           <h1>Choose a preset amount:</h1>

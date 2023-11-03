@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="flex flex-row items-center justify-center gap-10">
+      <main className="flex flex-row mt-10 gap-10">
         <MainCard />
         <DonationForm />
       </main>
