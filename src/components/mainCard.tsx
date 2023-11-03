@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Donations from "./donations";
 
 const MainCard = () => {
   return (
@@ -158,6 +159,10 @@ const MainCard = () => {
             </div>
           </div>
         </section>
+      </div>
+      <div>
+        <h2>Previous Donations</h2>
+        {/* <Donations /> */}
       </div>
     </section>
   );
