@@ -97,66 +97,68 @@ const DonationForm = () => {
     }
   };
   return (
-    <main className="full-w flex flex-col mx-20 ">
-      <div className="flex flex-col space-y-4">
-        <div className="flex flex-col space-y-2">
-          <h1>Choose a preset amount:</h1>
-          <div className="flex space-x-2">
-            {presets.map((preset) => (
-              <Button key={preset} onClick={() => handlePresetClick(preset)}>
-                {preset}
-              </Button>
-            ))}
+    <main className="full-w flex flex-col mx-20  ">
+      <form onSubmit={handleSubmit}>
+        <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-2">
+            <h1>Choose a preset amount:</h1>
+            <div className="flex space-x-2">
+              {presets.map((preset) => (
+                <Button key={preset} onClick={() => handlePresetClick(preset)}>
+                  {preset}
+                </Button>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <h1>Or specify an amount (max: {MAX_DONATION_IN_NAIRA}):</h1>
+            <Input
+              type="number"
+              value={quantity}
+              onChange={handleQuantityChange}
+              min={100}
+              max={MAX_DONATION_IN_NAIRA}
+              required
+            />
+            {quantityError && (
+              <span className="text-red-500">{quantityError}</span>
+            )}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="name">Name:</Label>
+            <Input
+              type="text"
+              id="name"
+              value={name}
+              onChange={handleNameChange}
+              required
+            />
+            {nameError && <span className="text-red-500">{nameError}</span>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="email">Email:</Label>
+            <Input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              required
+            />
+            {emailError && <span className="text-red-500">{emailError}</span>}
+          </div>
+          <div className="flex flex-col space-y-2">
+            <Label htmlFor="message">Message: </Label>
+            <Textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
           </div>
         </div>
-        <div className="flex flex-col space-y-2">
-          <h1>Or specify an amount (max: {MAX_DONATION_IN_NAIRA}):</h1>
-          <Input
-            type="number"
-            value={quantity}
-            onChange={handleQuantityChange}
-            min={100}
-            max={MAX_DONATION_IN_NAIRA}
-            required
-          />
-          {quantityError && (
-            <span className="text-red-500">{quantityError}</span>
-          )}
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="name">Name:</Label>
-          <Input
-            type="text"
-            id="name"
-            value={name}
-            onChange={handleNameChange}
-            required
-          />
-          {nameError && <span className="text-red-500">{nameError}</span>}
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-            required
-          />
-          {emailError && <span className="text-red-500">{emailError}</span>}
-        </div>
-        <div className="flex flex-col space-y-2">
-          <Label htmlFor="message">Message: </Label>
-          <Textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-          />
-        </div>
-      </div>
-      <Button onClick={handleSubmit}>
-        <Link href="#"> Donate #{quantity * (DONATION_IN_NAIRA / 100)}</Link>
-      </Button>
+        <Button className="my-5 ">
+          Donate #{quantity * (DONATION_IN_NAIRA / 100)}
+        </Button>
+      </form>
     </main>
   );
 };
