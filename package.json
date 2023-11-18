@@ -1,5 +1,5 @@
 {
-  "name": "starter",
+  "name": "DonationsApp",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "next": "14.0.0",
+    "next-themes": "^0.2.1",
     "paystack": "^2.0.1",
     "react": "^18",
     "react-dom": "^18",
