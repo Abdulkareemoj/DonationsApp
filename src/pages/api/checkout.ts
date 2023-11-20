@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Paystack from "paystack";
 
-const paystack = Paystack(process.env.PAYSTACK_SECRET_KEY);
+const paystack = Paystack(process.env.PAYSTACK_SECRET_KEY!);
 
 type Data = {
   message: string;
