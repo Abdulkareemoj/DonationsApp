@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/router";
+import { PaystackButton, usePaystackPayment } from "react-paystack";
 
 const MAX_DONATION_IN_NAIRA = 10000;
 const DONATION_IN_NAIRA = 100;
@@ -16,12 +17,33 @@ const DonationForm = () => {
   const [message, setMessage] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [error, setError] = useState(null);
-  const [email, setEmail] = useState("");
+  const [donationEmail, setDonationEmail] = useState("");
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [quantityError, setQuantityError] = useState("");
-  const router = useRouter();
+  // const router = useRouter();
   const presets = [100, 500, 1000, 5000];
+
+  const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
+  const amount = quantity * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo
+  const email = process.env.EMAIL!; // replace with customer's email
+
+  const config = {
+    reference: new Date().getTime().toString(),
+    email,
+    amount,
+    publicKey,
+  };
+  const initializePayment = usePaystackPayment(config);
+
+  const handleSuccess = (reference: string) => {
+    // Implementation for whatever you want to do after a successful transaction.
+    console.log(reference);
+  };
+  const handleClose = () => {
+    // what you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
@@ -52,7 +74,7 @@ const DonationForm = () => {
     } else {
       setEmailError("");
     }
-    setEmail(value);
+    setDonationEmail(value);
   };
 
   const handlePresetClick = (value: number) => {
@@ -74,27 +96,27 @@ const DonationForm = () => {
       return;
     }
 
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, email, message, amount: quantity }),
-      });
+    // try {
+    //   const response = await fetch("/api/checkout", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({ name, email, message, amount: quantity }),
+    //   });
 
-      const data = await response.json();
-      console.log(data);
+    //   const data = await response.json();
+    //   console.log(data);
 
-      if (!data.ok) {
-        setError(data.error);
-        return;
-      }
-      const url = data.url;
-      router.push(url);
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (!data.ok) {
+    //     setError(data.error);
+    //     return;
+    //   }
+    //   const url = data.url;
+    //   router.push(url);
+    // } catch (error) {
+    //   console.error(error);
+    // }
   };
   return (
     <main className="full-w flex flex-col mx-20  ">
@@ -139,8 +161,8 @@ const DonationForm = () => {
             <Label htmlFor="email">Email:</Label>
             <Input
               type="email"
-              id="email"
-              value={email}
+              id="donationEmail"
+              value={donationEmail}
               onChange={handleEmailChange}
               required
             />
@@ -155,7 +177,12 @@ const DonationForm = () => {
             />
           </div>
         </div>
-        <Button className="my-5 ">
+        <Button
+          onClick={() => {
+            initializePayment(handleSuccess, handleClose);
+          }}
+          className="my-5 "
+        >
           Donate #{quantity * (DONATION_IN_NAIRA / 100)}
         </Button>
       </form>
