@@ -36,9 +36,9 @@ const DonationForm = () => {
   };
   const initializePayment = usePaystackPayment(config);
 
-  const handleSuccess = (reference: string) => {
+  const handleSuccess = () => {
     // Implementation for whatever you want to do after a successful transaction.
-    console.log(reference);
+    console.log("Success");
   };
   const handleClose = () => {
     // what you want to do when the Paystack dialog closed.
