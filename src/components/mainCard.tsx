@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Donations from "./donations";
+// import Donations from "./donations";
 
 const MainCard = () => {
   return (
