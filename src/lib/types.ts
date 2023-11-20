@@ -25,5 +25,5 @@ export interface Link {
   label?: string;
   href?: string;
   ariaLabel?: string;
-  icon?: Function;
+  icon?: React.ElementType;
 }
