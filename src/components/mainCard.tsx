@@ -4,7 +4,6 @@ import Image from "next/image";
 const MainCard = () => {
   return (
     <section className="text-gray-600 body-font border-orange-700 rounded-sm mx-20 flex flex-col">
-      {/* <img className="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600"> */}
       <div className=" border-t-red-700">
         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
           Knausgaard typewriter readymade marfa

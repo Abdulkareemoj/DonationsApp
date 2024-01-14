@@ -86,7 +86,7 @@ const DonationForm = () => {
     event.preventDefault();
     setError(null);
 
-    if (!name || !email || !quantity) {
+    if (!name || !quantity) {
       alert("Please fill in all required fields.");
       return;
     }
@@ -183,7 +183,12 @@ const DonationForm = () => {
           }}
           className="my-5 "
         >
-          Donate #{quantity * (DONATION_IN_NAIRA / 100)}
+          <PaystackButton
+            publicKey={publicKey}
+            email={email}
+            amount={quantity * (DONATION_IN_NAIRA / 100)}
+          />
+          Donate {/*  #{quantity * (DONATION_IN_NAIRA / 100)} */}
         </Button>
       </form>
     </main>
