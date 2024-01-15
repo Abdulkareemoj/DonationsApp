@@ -22,7 +22,7 @@ const DonationForm = () => {
   const [emailError, setEmailError] = useState("");
   const [quantityError, setQuantityError] = useState("");
   // const router = useRouter();
-  const presets = [100, 500, 1000, 5000];
+  const presets = [100, 500, 1000, 5000, 10000];
 
   const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
   const amount = quantity * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo

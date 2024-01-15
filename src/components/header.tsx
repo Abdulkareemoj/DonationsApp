@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ChevronDownIcon, ArchiveIcon } from "@radix-ui/react-icons";
-import ToggleDarkMode from "@/components/toggledarkmode";
+// import ToggleDarkMode from "@/components/toggledarkmode";
 import Link from "next/link";
 import Logo from "@/components/logo";
 import ToggleMenu from "@/components/togglemenu";
@@ -196,7 +196,7 @@ const Header = () => {
             isToggleMenuOpen ? "block" : "hidden"
           } fixed bottom-0 left-0 w-full justify-end p-3 md:static md:mb-0 md:flex md:w-auto md:self-center md:p-0`}
         >
-          <div className="flex w-full items-center justify-between md:w-auto">
+          {/* <div className="flex w-full items-center justify-between md:w-auto">
             {showToggleTheme && <ToggleDarkMode />}
             {showRssFeed && (
               <Link
@@ -206,8 +206,8 @@ const Header = () => {
               >
                 <ArchiveIcon className="h-5 w-5" />
               </Link>
-            )}
-            {/* {actions && actions.length > 0 && (
+            )} */}
+          {/* {actions && actions.length > 0 && (
               <div className="ml-4 flex w-max flex-wrap justify-end">
                 {actions.map((callToAction, index) => (
                   <CTA
@@ -218,8 +218,8 @@ const Header = () => {
                 ))}
               </div>
             )} */}
-          </div>
         </div>
+        {/* </div> */}
       </div>
     </header>
   );
