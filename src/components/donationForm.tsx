@@ -31,12 +31,13 @@ const DonationForm = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email,
-    amount,
+    amount: quantity * (DONATION_IN_NAIRA / 100) * 100, // convert to kobo
     publicKey,
   };
   const initializePayment = usePaystackPayment(config);
 
   const handleSuccess = () => {
+    console.log();
     // Implementation for whatever you want to do after a successful transaction.
     console.log("Success");
   };
@@ -177,18 +178,8 @@ const DonationForm = () => {
             />
           </div>
         </div>
-        <Button
-          onClick={() => {
-            initializePayment(handleSuccess, handleClose);
-          }}
-          className="my-5 "
-        >
-          <PaystackButton
-            publicKey={publicKey}
-            email={email}
-            amount={quantity * (DONATION_IN_NAIRA / 100)}
-          />
-          Donate {/*  #{quantity * (DONATION_IN_NAIRA / 100)} */}
+        <Button onClick={() => initializePayment(handleSuccess, handleClose)}>
+          Donate
         </Button>
       </form>
     </main>
