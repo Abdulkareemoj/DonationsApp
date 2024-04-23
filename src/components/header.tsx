@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ChevronDownIcon, ArchiveIcon } from "@radix-ui/react-icons";
 // import ToggleDarkMode from "@/components/toggledarkmode";
 import Link from "next/link";
 import Logo from "@/components/logo";
@@ -9,34 +8,8 @@ import { HeaderProps } from "@/lib/types";
 export const headerData: HeaderProps = {
   links: [
     {
-      label: "Pages",
-      icon: ChevronDownIcon,
-      links: [
-        {
-          label: "About us",
-          href: "#",
-        },
-        {
-          label: "Pricing",
-          href: "#",
-        },
-        {
-          label: "Contact us",
-          href: "#",
-        },
-        {
-          label: "FAQs",
-          href: "#",
-        },
-        {
-          label: "Privacy Policy",
-          href: "#",
-        },
-        {
-          label: "Terms & Conditions",
-          href: "#",
-        },
-      ],
+      label: "About us",
+      href: "#",
     },
     {
       label: "Blog",
