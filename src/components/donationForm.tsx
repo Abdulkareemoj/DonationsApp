@@ -26,18 +26,16 @@ const DonationForm = () => {
 
   const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
   const amount = quantity * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo
-  const email = process.env.EMAIL!; // replace with customer's email
+  const email = donationEmail; // replace with customer's email
 
   const config = {
     reference: new Date().getTime().toString(),
     email,
-    amount: quantity * (DONATION_IN_NAIRA / 100) * 100, // convert to kobo
-    publicKey,
+    amount,
   };
   const initializePayment = usePaystackPayment(config);
 
   const handleSuccess = () => {
-    console.log();
     // Implementation for whatever you want to do after a successful transaction.
     console.log("Success");
   };
