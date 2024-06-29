@@ -12,8 +12,8 @@ export const headerData: HeaderProps = {
       href: "#",
     },
     {
-      label: "Blog",
-      href: "#",
+      label: "Donations",
+      href: "/donations",
     },
     {
       label: "Contact",
