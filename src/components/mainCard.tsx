@@ -1,7 +1,4 @@
-import Image from "next/image";
-// import Donations from "./donations";
-
-const MainCard = () => {
+export default function MainCard() {
   return (
     <section className="text-gray-600 body-font border-orange-700 rounded-sm mx-20 flex flex-col">
       <div className=" border-t-red-700">
@@ -69,13 +66,6 @@ const MainCard = () => {
           </button>
         </div>
       </div>
-
-      <div>
-        <h2>Previous Donations</h2>
-        {/* <Donations /> */}
-      </div>
     </section>
   );
-};
-
-export default MainCard;
+}

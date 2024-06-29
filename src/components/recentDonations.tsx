@@ -3,14 +3,7 @@ import { MoreHorizontal } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,15 +19,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import Link from "next/link";
 
-export default function DonationsPage() {
+export default function Donations() {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>All Donations</CardTitle>
-        <CardDescription>Yes, all of them</CardDescription>
-      </CardHeader>
-      <CardContent>
+    <>
+      <div className="p">
+        <h2>Donations</h2>
+
         <Table>
           <TableHeader>
             <TableRow>
@@ -274,12 +266,13 @@ export default function DonationsPage() {
             </TableRow>
           </TableBody>
         </Table>
-      </CardContent>
-      <CardFooter>
-        <div className="text-xs text-muted-foreground">
-          Showing <strong>1-10</strong> of <strong>32</strong> products
-        </div>
-      </CardFooter>
-    </Card>
+        <Link
+          className="text-xs text-muted-foreground underline"
+          href="/donations"
+        >
+          View all Donations
+        </Link>
+      </div>
+    </>
   );
 }
