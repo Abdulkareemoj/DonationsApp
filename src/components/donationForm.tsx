@@ -32,6 +32,7 @@ const DonationForm = () => {
     reference: new Date().getTime().toString(),
     email,
     amount,
+    publicKey,
   };
   const initializePayment = usePaystackPayment(config);
 
