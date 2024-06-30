@@ -177,7 +177,13 @@ const DonationForm = () => {
             />
           </div>
         </div>
-        <Button onClick={() => initializePayment(handleSuccess, handleClose)}>
+        <Button
+          onClick={() =>
+            initializePayment({
+              onSuccess: handleSuccess,
+            })
+          }
+        >
           Donate
         </Button>
       </form>
