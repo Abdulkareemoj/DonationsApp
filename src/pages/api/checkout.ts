@@ -19,7 +19,7 @@ export default async function handler(
   const name = req.body.name || "Anonymous";
   const message = req.body.message || "";
   const quantity = req.body.quantity || 1;
-  const amountInKobo = (parseFloat(req.body.amount) * 100).toFixed(0);
+  const amountInKobo = Math.round(parseFloat(req.body.amount) * 100);
   const email = req.body.email;
   const reference = req.body.reference;
 
