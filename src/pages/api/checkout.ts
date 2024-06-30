@@ -5,6 +5,7 @@ const paystack = Paystack(process.env.PAYSTACK_SECRET_KEY!);
 
 type Data = {
   message: string;
+  url?: string;
 };
 
 export default async function handler(
@@ -48,7 +49,10 @@ export default async function handler(
     });
     const url = session.url;
     if (url) {
-      return res.status(200).send({ url });
+      return res.status(200).send({
+        url,
+        message: "",
+      });
     }
 
     console.log(session);
