@@ -8,7 +8,7 @@ type Data = {
   url?: string;
 };
 
-export default async function handler(
+export default async function CheckoutHandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {

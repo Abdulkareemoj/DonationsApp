@@ -7,7 +7,7 @@ type Data = {
   message: string;
 };
 
-export default async function handler(
+export default async function CallbackHandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
