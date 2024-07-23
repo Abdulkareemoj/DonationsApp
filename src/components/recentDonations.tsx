@@ -25,11 +25,22 @@ import Airtable from "airtable";
 export default function Donations() {
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-const baseId= process.env.AIRTABLE_BASE_ID
-  useEffect(() => {
-    const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(baseId);
 
-    base("Table Name")
+  useEffect(() => {
+    const apiKey = process.env.AIRTABLE_API_KEY;
+    const baseId = process.env.AIRTABLE_BASE_ID;
+
+    console.log(apiKey);
+    console.log(baseId);
+    if (!apiKey || !baseId) {
+      console.error("Airtable API key or Base ID is undefined");
+      setIsLoading(false);
+      return;
+    }
+
+    const base = new Airtable({ apiKey }).base(baseId);
+
+    base("Donors")
       .select({
         // Specify sorting, filtering, and fields if necessary
       })
