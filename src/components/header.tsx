@@ -168,31 +168,12 @@ const Header = () => {
           className={`${
             isToggleMenuOpen ? "block" : "hidden"
           } fixed bottom-0 left-0 w-full justify-end p-3 md:static md:mb-0 md:flex md:w-auto md:self-center md:p-0`}
-        >
-          {/* <div className="flex w-full items-center justify-between md:w-auto">
-            {showToggleTheme && <ToggleDarkMode />}
-            {showRssFeed && (
-              <Link
-                className="text-muted inline-flex items-center rounded-lg p-2.5 text-sm hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                aria-label="RSS Feed"
-                href=""
-              >
-                <ArchiveIcon className="h-5 w-5" />
-              </Link>
-            )} */}
-          {/* {actions && actions.length > 0 && (
-              <div className="ml-4 flex w-max flex-wrap justify-end">
-                {actions.map((callToAction, index) => (
-                  <CTA
-                    key={`item-action-${index}`}
-                    data={callToAction as CallToAction}
-                    class="m-1 py-2 px-5 text-sm font-semibold shadow-none md:px-6"
-                  />
-                ))}
-              </div>
-            )} */}
-        </div>
-        {/* </div> */}
+        ></div>
+
+        {/* <Avatar>
+              <AvatarImage src="/placeholder-user.jpg" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar> */}
       </div>
     </header>
   );
