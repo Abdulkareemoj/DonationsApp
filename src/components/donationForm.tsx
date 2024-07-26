@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { JSX, SVGProps, useState } from "react";
 
 import Head from "next/head";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/router";
 import { PaystackButton, usePaystackPayment } from "react-paystack";
-
+import { Icons } from "@/components/ui/icons";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 const MAX_DONATION_IN_NAIRA = 10000;
 const DONATION_IN_NAIRA = 100;
 
@@ -119,36 +123,100 @@ const DonationForm = () => {
     // }
   };
   return (
-    <main className="full-w flex flex-col mx-20  ">
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col space-y-4">
-          <div className="flex flex-col space-y-2">
-            <h1>Choose a preset amount:</h1>
-            <div className="flex space-x-2">
-              {presets.map((preset) => (
-                <Button key={preset} onClick={() => handlePresetClick(preset)}>
-                  {preset}
-                </Button>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-col space-y-2">
-            <h1>Or specify an amount (max: {MAX_DONATION_IN_NAIRA}):</h1>
-            <Input
-              type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-              min={100}
-              max={MAX_DONATION_IN_NAIRA}
-              required
+    <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="flex flex-col md:flex-row">
+        <div className="w-full md:w-2/3 p-6">
+          <div className="relative">
+            <Image
+              src="/placeholder.png"
+              width={24}
+              height={24}
+              alt="Cover"
+              className="w-full h-48 object-cover rounded-lg"
             />
-            {quantityError && (
-              <span className="text-red-500">{quantityError}</span>
-            )}
+            <Button className="absolute top-2 right-2" variant="outline">
+              Edit page
+            </Button>
           </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="name">Name:</Label>
+          <div className="flex items-center mt-4">
+            <Avatar className="mr-4">
+              <AvatarImage src="/placeholder.png" />
+              <AvatarFallback>HL</AvatarFallback>
+            </Avatar>
+            <div>
+              <h2 className="text-2xl font-bold">Henry Louis</h2>
+              <p className="text-muted-foreground">Artist</p>
+            </div>
+            <Badge variant="secondary" className="ml-auto">
+              143 supporters
+            </Badge>
+          </div>
+          <p className="mt-4 text-muted-foreground">
+            Howdy fellow animator. If you&apos;re here looking for my tutorials
+            and Ae-files you&apos;re in luck.. Got a whole lot of this going on
+            inside if you buy me a coffee.
+          </p>
+          <div className="flex items-center mt-4 space-x-2">
+            <Icons.GlobeIcon className="h-6 w-6" />
+            <Icons.TwitterIcon className="h-6 w-6" />
+            <Icons.InstagramIcon className="h-6 w-6" />
+            <Icons.LinkedinIcon className="h-6 w-6" />
+          </div>
+          <div className="flex items-center mt-4 space-x-4">
+            <Button variant="ghost">New post</Button>
+            <Button variant="ghost">Add photo</Button>
+            <Button variant="ghost">Enter Youtube or Vimeo link</Button>
+          </div>
+          <Input
+            placeholder="Paste Youtube or Vimeo link here..."
+            className="mt-4"
+          />
+        </div>
+        <div className="w-full md:w-2/5  p-6 bg-gray-50 border-l">
+          <form onSubmit={handleSubmit}>
+            <h3 className="text-xl font-bold">
+              Buy <span className="text-primary">Henry Louis</span> a coffee
+            </h3>
+            <div className="flex items-center mt-4 space-x-2">
+              <Icons.CoffeeIcon className="h-6 w-6" />
+              <div className="flex items-center space-x-2">
+                {presets.map((preset) => (
+                  <Button
+                    variant="outline"
+                    className="rounded-full"
+                    key={preset}
+                    onClick={() => handlePresetClick(preset)}
+                  >
+                    {preset}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="flex flex-col space-y-2">
+              <h1>Or specify an amount (max: {MAX_DONATION_IN_NAIRA}):</h1>
+              <Input
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                min={100}
+                max={MAX_DONATION_IN_NAIRA}
+                required
+              />
+              {quantityError && (
+                <span className="text-red-500">{quantityError}</span>
+              )}
+            </div>
+            <div className="flex mt-4 space-x-2">
+              <Button variant="outline" className="flex-1">
+                One-time
+              </Button>
+              <Button variant="default" className="flex-1">
+                Monthly
+              </Button>
+            </div>
             <Input
+              placeholder="Name or @yourtwitter"
+              className="mt-4"
               type="text"
               id="name"
               value={name}
@@ -156,38 +224,50 @@ const DonationForm = () => {
               required
             />
             {nameError && <span className="text-red-500">{nameError}</span>}
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="email">Email:</Label>
             <Input
-              type="email"
+              placeholder="E-Mail Address"
+              className="mt-4"
+              type="text"
               id="donationEmail"
               value={donationEmail}
               onChange={handleEmailChange}
               required
             />
             {emailError && <span className="text-red-500">{emailError}</span>}
-          </div>
-          <div className="flex flex-col space-y-2">
-            <Label htmlFor="message">Message: </Label>
             <Textarea
+              placeholder="Message (optional)"
+              className="mt-4"
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
             />
-          </div>
+            <div className="flex items-center mt-4 space-x-2">
+              <Checkbox id="private-message" />
+              <label htmlFor="private-message" className="text-sm">
+                Private message
+              </label>
+            </div>
+            <Button
+              onClick={() =>
+                initializePayment({
+                  onSuccess: handleSuccess,
+                })
+              }
+              className="w-full mt-4"
+            >
+              Support Me {quantity}
+            </Button>
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              No sign up required.
+            </p>
+            <p className="mt-4 text-center text-sm">
+              96 coffees received of 200 coffee goal
+            </p>
+          </form>
         </div>
-        <Button
-          onClick={() =>
-            initializePayment({
-              onSuccess: handleSuccess,
-            })
-          }
-        >
-          Donate
-        </Button>
-      </form>
-    </main>
+      </div>
+    </div>
   );
 };
+
 export default DonationForm;
