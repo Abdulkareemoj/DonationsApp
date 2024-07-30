@@ -13,6 +13,8 @@ import { Icons } from "@/components/ui/icons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import React from "react";
 const MAX_DONATION_IN_NAIRA = 10000;
 const DONATION_IN_NAIRA = 100;
 
@@ -27,7 +29,17 @@ const DonationForm = () => {
   const [quantityError, setQuantityError] = useState("");
   // const router = useRouter();
   const presets = [100, 500, 1000, 5000, 10000];
+  const [selectedPreset, setSelectedPreset] = useState("100");
 
+  const handlePresetChange = (value: number) => {
+    if (value >= 100) {
+      setSelectedPreset(value);
+      setQuantity(value);
+      setQuantityError("");
+    } else {
+      setQuantityError("Value must be greater or equal to 100");
+    }
+  };
   const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
   const amount = quantity * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo
   const email = donationEmail; // replace with customer's email
@@ -178,18 +190,63 @@ const DonationForm = () => {
               Buy <span className="text-primary">Henry Louis</span> a coffee
             </h3>
             <div className="flex items-center mt-4 space-x-2">
-              <Icons.CoffeeIcon className="h-6 w-6" />
-              <div className="flex items-center space-x-2">
-                {presets.map((preset) => (
-                  <Button
-                    variant="outline"
-                    className="rounded-full"
-                    key={preset}
-                    onClick={() => handlePresetClick(preset)}
+              {/* 
+                     <div className="flex items-center mt-4 space-x-2">
+              <CoffeeIcon className="h-6 w-6" />
+              <RadioGroup defaultValue="1">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="1" id="coffee-1" className="peer sr-only" />
+                  <Label
+                    htmlFor="coffee-1"
+                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
                   >
-                    {preset}
-                  </Button>
-                ))}
+                    1
+                  </Label>
+                  <RadioGroupItem value="3" id="coffee-3" className="peer sr-only" />
+                  <Label
+                    htmlFor="coffee-3"
+                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
+                  >
+                    3
+                  </Label>
+                  <RadioGroupItem value="5" id="coffee-5" className="peer sr-only" />
+                  <Label
+                    htmlFor="coffee-5"
+                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
+                  >
+                    5
+                  </Label>
+                </div>
+              </RadioGroup>
+            </div> */}
+              <div className="flex items-center space-x-2">
+                <Icons.CoffeeIcon className="h-6 w-6" />
+                <RadioGroup
+                  value={selectedPreset}
+                  onValueChange={handlePresetChange}
+                >
+                  <div className="flex items-center space-x-2">
+                    {presets.map((preset) => (
+                      <React.Fragment key={preset}>
+                        <RadioGroupItem
+                          value={preset}
+                          id={`preset-${preset}`}
+                          className="peer sr-only"
+                        />
+                        <Label
+                          htmlFor={`preset-${preset}`}
+                          className={`inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
+                            selectedPreset === preset.toString()
+                              ? "bg-primary text-primary-foreground"
+                              : ""
+                          }`}
+                        >
+                          {preset}
+                        </Label>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </RadioGroup>
               </div>
             </div>
             <div className="flex flex-col space-y-2">
@@ -255,7 +312,7 @@ const DonationForm = () => {
               }
               className="w-full mt-4"
             >
-              Support Me {quantity}
+              Support Me %{quantity}
             </Button>
             <p className="mt-4 text-center text-sm text-muted-foreground">
               No sign up required.
