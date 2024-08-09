@@ -30,6 +30,7 @@ const DonationForm = () => {
   // const router = useRouter();
   const presets = [100, 500, 1000, 5000, 10000];
   const [selectedPreset, setSelectedPreset] = useState("100");
+  const [selectedDonation, setSelectedDonation] = useState("");
 
   const handlePresetChange = (value: number) => {
     if (value >= 100) {
@@ -221,32 +222,21 @@ const DonationForm = () => {
             </div> */}
               <div className="flex items-center space-x-2">
                 <Icons.CoffeeIcon className="h-6 w-6" />
-                <RadioGroup
-                  value={selectedPreset}
-                  onValueChange={handlePresetChange}
-                >
-                  <div className="flex items-center space-x-2">
-                    {presets.map((preset) => (
-                      <React.Fragment key={preset}>
-                        <RadioGroupItem
-                          value={preset}
-                          id={`preset-${preset}`}
-                          className="peer sr-only"
-                        />
-                        <Label
-                          htmlFor={`preset-${preset}`}
-                          className={`inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
-                            selectedPreset === preset.toString()
-                              ? "bg-primary text-primary-foreground"
-                              : ""
-                          }`}
-                        >
-                          {preset}
-                        </Label>
-                      </React.Fragment>
-                    ))}
-                  </div>
-                </RadioGroup>
+                <div className="flex items-center space-x-2">
+                  {presets.map((preset) => (
+                    <Button
+                      key={preset}
+                      onClick={() => handlePresetChange(preset)}
+                      className={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
+                        selectedPreset === preset
+                          ? "bg-primary text-primary-foreground"
+                          : ""
+                      }`}
+                    >
+                      {preset}
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
             <div className="flex flex-col space-y-2">
@@ -264,10 +254,26 @@ const DonationForm = () => {
               )}
             </div>
             <div className="flex mt-4 space-x-2">
-              <Button variant="outline" className="flex-1">
+              <Button
+                variant="outline"
+                className={`flex-1 ${
+                  selectedDonation === "one-time"
+                    ? "bg-gray-800 text-white"
+                    : "bg-white text-black"
+                }`}
+                onClick={() => setSelectedDonation("one-time")}
+              >
                 One-time
               </Button>
-              <Button variant="default" className="flex-1">
+              <Button
+                variant="default"
+                className={`flex-1 ${
+                  selectedDonation === "monthly"
+                    ? "bg-gray-800 text-white"
+                    : "bg-white text-black"
+                }`}
+                onClick={() => setSelectedDonation("monthly")}
+              >
                 Monthly
               </Button>
             </div>
@@ -292,7 +298,7 @@ const DonationForm = () => {
             />
             {emailError && <span className="text-red-500">{emailError}</span>}
             <Textarea
-              placeholder="Message (optional)"
+              placeholder="Message (Donational)"
               className="mt-4"
               id="message"
               value={message}
