@@ -136,7 +136,7 @@ const DonationForm = () => {
     // }
   };
   return (
-    <div className="max-w-6xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-6xl mx-auto bg-gray-50 shadow-lg rounded-lg overflow-hidden">
       <div className="flex flex-col md:flex-row">
         <div className="w-full md:w-2/3 p-6">
           <div className="relative">
@@ -157,17 +157,17 @@ const DonationForm = () => {
               <AvatarFallback>HL</AvatarFallback>
             </Avatar>
             <div>
-              <h2 className="text-2xl font-bold">Henry Louis</h2>
-              <p className="text-muted-foreground">Artist</p>
+              <h2 className="text-2xl font-bold">User</h2>
+              <p className="text-muted-foreground">Name</p>
             </div>
             <Badge variant="secondary" className="ml-auto">
               143 supporters
             </Badge>
           </div>
           <p className="mt-4 text-muted-foreground">
-            Howdy fellow animator. If you&apos;re here looking for my tutorials
-            and Ae-files you&apos;re in luck.. Got a whole lot of this going on
-            inside if you buy me a coffee.
+            Howdy fellow coder. If you&apos;re here looking for something
+            intresting you&apos;re in luck.. Got a whole lot of this going on
+            inside if you buy me a coffee or just make a nice donation.
           </p>
           <div className="flex items-center mt-4 space-x-2">
             <Icons.GlobeIcon className="h-6 w-6" />
@@ -185,62 +185,34 @@ const DonationForm = () => {
             className="mt-4"
           />
         </div>
-        <div className="w-full md:w-2/5  p-6 bg-gray-50 border-l">
+        <div className="w-full md:w-2/5  p-6 bg-gray-200 border-l">
           <form onSubmit={handleSubmit}>
             <h3 className="text-xl font-bold">
-              Buy <span className="text-primary">Henry Louis</span> a coffee
+              Buy <span className="text-primary">User</span> a coffee
             </h3>
-            <div className="flex items-center mt-4 space-x-2">
-              {/* 
-                     <div className="flex items-center mt-4 space-x-2">
-              <CoffeeIcon className="h-6 w-6" />
-              <RadioGroup defaultValue="1">
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="1" id="coffee-1" className="peer sr-only" />
-                  <Label
-                    htmlFor="coffee-1"
-                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
-                  >
-                    1
-                  </Label>
-                  <RadioGroupItem value="3" id="coffee-3" className="peer sr-only" />
-                  <Label
-                    htmlFor="coffee-3"
-                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
-                  >
-                    3
-                  </Label>
-                  <RadioGroupItem value="5" id="coffee-5" className="peer sr-only" />
-                  <Label
-                    htmlFor="coffee-5"
-                    className="inline-flex items-center justify-center rounded-full border border-input bg-background px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 peer-checked:bg-primary peer-checked:text-primary-foreground"
-                  >
-                    5
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div> */}
+
+            <div className="flex items-center space-x-2 py-4">
+              <Icons.CoffeeIcon className="h-6 w-6" />
               <div className="flex items-center space-x-2">
-                <Icons.CoffeeIcon className="h-6 w-6" />
-                <div className="flex items-center space-x-2">
-                  {presets.map((preset) => (
-                    <Button
-                      key={preset}
-                      onClick={() => handlePresetChange(preset)}
-                      className={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
-                        selectedPreset === preset
-                          ? "bg-primary text-primary-foreground"
-                          : ""
-                      }`}
-                    >
-                      {preset}
-                    </Button>
-                  ))}
-                </div>
+                {presets.map((preset) => (
+                  <Button
+                    key={preset}
+                    onClick={() => handlePresetChange(preset)}
+                    className={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
+                      selectedPreset === preset
+                        ? "bg-primary text-primary-foreground"
+                        : ""
+                    }`}
+                  >
+                    {preset}
+                  </Button>
+                ))}
               </div>
             </div>
             <div className="flex flex-col space-y-2">
-              <h1>Or specify an amount (max: {MAX_DONATION_IN_NAIRA}):</h1>
+              <h1>
+                Or you can specify an amount (max: {MAX_DONATION_IN_NAIRA}):
+              </h1>
               <Input
                 type="number"
                 value={quantity}
@@ -278,7 +250,7 @@ const DonationForm = () => {
               </Button>
             </div>
             <Input
-              placeholder="Name or @yourtwitter"
+              placeholder="Name or @yourXUsername"
               className="mt-4"
               type="text"
               id="name"
@@ -298,7 +270,7 @@ const DonationForm = () => {
             />
             {emailError && <span className="text-red-500">{emailError}</span>}
             <Textarea
-              placeholder="Message (Donational)"
+              placeholder="Message (Donation)"
               className="mt-4"
               id="message"
               value={message}

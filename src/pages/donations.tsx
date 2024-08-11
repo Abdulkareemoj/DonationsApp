@@ -29,7 +29,7 @@ import {
 
 export default function DonationsPage() {
   return (
-    <Card>
+    <>
       <CardHeader>
         <CardTitle>All Donations</CardTitle>
         <CardDescription>Yes, all of them</CardDescription>
@@ -280,6 +280,6 @@ export default function DonationsPage() {
           Showing <strong>1-10</strong> of <strong>32</strong> products
         </div>
       </CardFooter>
-    </Card>
+    </>
   );
 }
