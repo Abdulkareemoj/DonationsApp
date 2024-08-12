@@ -1,140 +1,110 @@
-import { JSX, SVGProps, useState } from "react";
-
-import Head from "next/head";
+import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { useRouter } from "next/router";
 import { PaystackButton, usePaystackPayment } from "react-paystack";
 import { Icons } from "@/components/ui/icons";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import React from "react";
-const MAX_DONATION_IN_NAIRA = 10000;
-const DONATION_IN_NAIRA = 100;
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-const DonationForm = () => {
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+const MAX_DONATION_IN_NAIRA = 10000; // Define your max donation amount
+const DONATION_IN_NAIRA = 100; // Define your donation conversion rate
+
+const donationSchema = z.object({
+  name: z.string().min(1, { message: "Name is required." }),
+  donationEmail: z.string().email({ message: "Invalid email address." }),
+  message: z.string().optional(),
+  amount: z.number().min(100, { message: "Minimum donation is 100 Naira." }),
+  selectedPreset: z.number().optional(),
+  selectedDonation: z.string().optional(),
+  privateMessage: z.boolean().optional(),
+});
+
+export default function DonationForm() {
+  const form = useForm<z.infer<typeof donationSchema>>({
+    resolver: zodResolver(donationSchema),
+    defaultValues: {
+      name: "",
+      donationEmail: "",
+      message: "",
+      amount: 0,
+      selectedPreset: undefined,
+      selectedDonation: "",
+      privateMessage: false,
+    },
+  });
+
   const [quantity, setQuantity] = useState(0);
-  const [error, setError] = useState(null);
-  const [donationEmail, setDonationEmail] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [quantityError, setQuantityError] = useState("");
-  // const router = useRouter();
-  const presets = [100, 500, 1000, 5000, 10000];
-  const [selectedPreset, setSelectedPreset] = useState("100");
-  const [selectedDonation, setSelectedDonation] = useState("");
-
-  const handlePresetChange = (value: number) => {
-    if (value >= 100) {
-      setSelectedPreset(value);
-      setQuantity(value);
-      setQuantityError("");
-    } else {
-      setQuantityError("Value must be greater or equal to 100");
-    }
-  };
-  const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
-  const amount = quantity * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo
-  const email = donationEmail; // replace with customer's email
-
-  const config = {
-    reference: new Date().getTime().toString(),
-    email,
-    amount,
-    publicKey,
-  };
-  const initializePayment = usePaystackPayment(config);
-
-  const handleSuccess = () => {
-    // Implementation for whatever you want to do after a successful transaction.
-    console.log("Success");
-  };
-  const handleClose = () => {
-    // what you want to do when the Paystack dialog closed.
-    console.log("closed");
-  };
+  const [quantityError, setQuantityError] = useState<string | null>(null);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseFloat(e.target.value);
-    if (value >= 100 && value <= MAX_DONATION_IN_NAIRA) {
-      setQuantity(parseFloat(value.toFixed(2)));
-      setQuantityError("");
+    const value = parseInt(e.target.value, 10);
+    if (value > MAX_DONATION_IN_NAIRA) {
+      setQuantityError(`Maximum donation amount is ${MAX_DONATION_IN_NAIRA}`);
     } else {
-      setQuantityError(
-        `Amount must be between ${DONATION_IN_NAIRA} and ${MAX_DONATION_IN_NAIRA}.`
-      );
+      setQuantityError(null);
     }
-  };
-
-  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value.trim() === "") {
-      setNameError("Name is required.");
-    } else {
-      setNameError("");
-    }
-    setName(value);
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      setEmailError("Please enter a valid email address.");
-    } else {
-      setEmailError("");
-    }
-    setDonationEmail(value);
-  };
-
-  const handlePresetClick = (value: number) => {
     setQuantity(value);
-    setQuantityError("");
+    form.setValue("amount", value);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setError(null);
+  const publicKey = process.env.PAYSTACK_PUBLIC_KEY!; // replace with your own public key
+  const initializePayment = usePaystackPayment({ publicKey });
 
-    if (!name || !quantity) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+  const onSubmit = (values: z.infer<typeof donationSchema>) => {
+    const amount = values.amount * (DONATION_IN_NAIRA / 100) * 100; // convert to kobo
+    const email = values.donationEmail; // replace with customer's email
 
-    if (nameError || emailError || quantityError) {
-      alert("Please fix the errors in the form.");
-      return;
-    }
+    const config = {
+      reference: new Date().getTime().toString(),
+      email,
+      amount,
+      publicKey,
+      onSuccess: () => console.log("Success"),
+      onClose: () => console.log("Closed"),
+    };
 
-    // try {
-    //   const response = await fetch("/api/checkout", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ name, email, message, amount: quantity }),
-    //   });
-
-    //   const data = await response.json();
-    //   console.log(data);
-
-    //   if (!data.ok) {
-    //     setError(data.error);
-    //     return;
-    //   }
-    //   const url = data.url;
-    //   router.push(url);
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    initializePayment(config);
   };
+
+  const presets = [100, 500, 1000, 5000, 10000];
+  const selectedPreset = form.watch("selectedPreset");
+  const selectedDonation = form.watch("selectedDonation");
+
+  // try {
+  //   const response = await fetch("/api/checkout", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ name, email, message, amount: quantity }),
+  //   });
+
+  //   const data = await response.json();
+  //   console.log(data);
+
+  //   if (!data.ok) {
+  //     setError(data.error);
+  //     return;
+  //   }
+  //   const url = data.url;
+  //   router.push(url);
+  // } catch (error) {
+  //   console.error(error);
+  // }
+
   return (
     <div className="max-w-6xl mx-auto bg-gray-50 shadow-lg rounded-lg overflow-hidden">
       <div className="flex flex-col md:flex-row">
@@ -186,123 +156,133 @@ const DonationForm = () => {
           />
         </div>
         <div className="w-full md:w-2/5  p-6 bg-gray-200 border-l">
-          <form onSubmit={handleSubmit}>
-            <h3 className="text-xl font-bold">
-              Buy <span className="text-primary">User</span> a coffee
-            </h3>
-
-            <div className="flex items-center space-x-2 py-4">
-              <Icons.CoffeeIcon className="h-6 w-6" />
-              <div className="flex items-center space-x-2">
-                {presets.map((preset) => (
-                  <Button
-                    key={preset}
-                    onClick={() => handlePresetChange(preset)}
-                    className={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
-                      selectedPreset === preset
-                        ? "bg-primary text-primary-foreground"
-                        : ""
-                    }`}
-                  >
-                    {preset}
-                  </Button>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col space-y-2">
-              <h1>
-                Or you can specify an amount (max: {MAX_DONATION_IN_NAIRA}):
-              </h1>
-              <Input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                min={100}
-                max={MAX_DONATION_IN_NAIRA}
-                required
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-              {quantityError && (
-                <span className="text-red-500">{quantityError}</span>
-              )}
-            </div>
-            <div className="flex mt-4 space-x-2">
-              <Button
-                variant="outline"
-                className={`flex-1 ${
-                  selectedDonation === "one-time"
-                    ? "bg-gray-800 text-white"
-                    : "bg-white text-black"
-                }`}
-                onClick={() => setSelectedDonation("one-time")}
-              >
-                One-time
+
+              <FormField
+                control={form.control}
+                name="donationEmail"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Message (Donation)</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Enter a message" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="privateMessage"
+                render={({ field }) => (
+                  <FormItem className="flex items-center mt-4 space-x-2">
+                    <FormControl>
+                      <Checkbox id="private-message" {...field} />
+                    </FormControl>
+                    <FormLabel htmlFor="private-message" className="text-sm">
+                      Private message
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+
+              <div className="flex items-center space-x-2 mt-4">
+                <Icons.CoffeeIcon className="h-6 w-6" />
+                <div className="flex items-center space-x-2">
+                  {presets.map((preset) => (
+                    <Button
+                      key={preset}
+                      onClick={() => form.setValue("selectedPreset", preset)}
+                      className={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 ${
+                        selectedPreset === preset
+                          ? "bg-primary text-primary-foreground"
+                          : ""
+                      }`}
+                    >
+                      {preset}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col space-y-2">
+                <h1>
+                  Or you can specify an amount (max: {MAX_DONATION_IN_NAIRA}):
+                </h1>
+                <Input
+                  type="number"
+                  value={quantity}
+                  onChange={handleQuantityChange}
+                  min={100}
+                  max={MAX_DONATION_IN_NAIRA}
+                  required
+                />
+                {quantityError && (
+                  <span className="text-red-500">{quantityError}</span>
+                )}
+              </div>
+
+              <div className="flex mt-4 space-x-2">
+                <Button
+                  variant="outline"
+                  className={`flex-1 ${
+                    selectedDonation === "one-time"
+                      ? "bg-gray-800 text-white"
+                      : "bg-white text-black"
+                  }`}
+                  onClick={() => form.setValue("selectedDonation", "one-time")}
+                >
+                  One-time
+                </Button>
+                <Button
+                  variant="default"
+                  className={`flex-1 ${
+                    selectedDonation === "monthly"
+                      ? "bg-gray-800 text-white"
+                      : "bg-white text-black"
+                  }`}
+                  onClick={() => form.setValue("selectedDonation", "monthly")}
+                >
+                  Monthly
+                </Button>
+              </div>
+
+              <Button type="submit" className="mt-4">
+                Submit
               </Button>
-              <Button
-                variant="default"
-                className={`flex-1 ${
-                  selectedDonation === "monthly"
-                    ? "bg-gray-800 text-white"
-                    : "bg-white text-black"
-                }`}
-                onClick={() => setSelectedDonation("monthly")}
-              >
-                Monthly
-              </Button>
-            </div>
-            <Input
-              placeholder="Name or @yourXUsername"
-              className="mt-4"
-              type="text"
-              id="name"
-              value={name}
-              onChange={handleNameChange}
-              required
-            />
-            {nameError && <span className="text-red-500">{nameError}</span>}
-            <Input
-              placeholder="E-Mail Address"
-              className="mt-4"
-              type="text"
-              id="donationEmail"
-              value={donationEmail}
-              onChange={handleEmailChange}
-              required
-            />
-            {emailError && <span className="text-red-500">{emailError}</span>}
-            <Textarea
-              placeholder="Message (Donation)"
-              className="mt-4"
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <div className="flex items-center mt-4 space-x-2">
-              <Checkbox id="private-message" />
-              <label htmlFor="private-message" className="text-sm">
-                Private message
-              </label>
-            </div>
-            <Button
-              onClick={() =>
-                initializePayment({
-                  onSuccess: handleSuccess,
-                })
-              }
-              className="w-full mt-4"
-            >
-              Support Me %{quantity}
-            </Button>
-            <p className="mt-4 text-center text-sm text-muted-foreground">
-              No sign up required.
-            </p>
-            <p className="mt-4 text-center text-sm">
-              96 coffees received of 200 coffee goal
-            </p>
-          </form>
+            </form>
+          </Form>
         </div>
       </div>
     </div>
   );
-};
-
-export default DonationForm;
+}
