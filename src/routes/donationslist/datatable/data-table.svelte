@@ -151,7 +151,7 @@
               <Table.Head>
                 {#if !header.isPlaceholder}
                   <div class={header.column.getCanSort() ? "cursor-pointer select-none" : ""} 
-                       on:click={() => header.column.getCanSort() && header.column.toggleSorting()}>
+                       onclick={() => header.column.getCanSort() && header.column.toggleSorting()}>
                     <FlexRender
                       content={header.column.columnDef.header}
                       context={header.getContext()}
@@ -190,7 +190,7 @@
     <Button
       variant="outline"
       size="sm"
-      on:click={() => table.previousPage()}
+      onclick={() => table.previousPage()}
       disabled={!table.getCanPreviousPage()}
     >
       Previous
@@ -198,7 +198,7 @@
     <Button
       variant="outline"
       size="sm"
-      on:click={() => table.nextPage()}
+      onclick={() => table.nextPage()}
       disabled={!table.getCanNextPage()}
     >
       Next
