@@ -32,13 +32,9 @@
 - [ ] Feature 2
 - [ ] Feature 3
 
-[Back to top](#readme-top)
-
 ## 🚀 Live Demo
 
 Not Deployed Yet.
-
-[Back to top](#readme-top)
 
 ## 💻 Getting Started
 
@@ -77,8 +73,6 @@ pnpm run dev
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-[Back to top](#readme-top)
-
 ## Deploy on Vercel
 
 The easiest way to deploy is using the [Vercel ](https://vercel.com/) but [Cloudflare Pages](https://cloudflare.com) and [Netlify](https://netlify.com) also works
@@ -89,16 +83,10 @@ Refer to the [Svelte deployment documentation](https://svelte.dev/docs/kit/adapt
 
 Suggest features by creating an issue
 
-[Back to top](#readme-top)
-
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Give this project a ⭐ if you like it.
 
-[Back to top](#readme-top)
-
 ## 📝 License
 
 This project is MIT licensed.
-
-[Back to top](#readme-top)
