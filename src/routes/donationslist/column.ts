@@ -10,7 +10,7 @@ export type Donation = {
 	id: string;
 	name: string;
 	status: string;
-	price: number;
+	amount: number;
 	quantity: number;
 	date: string;
 	imageUrl: string;
@@ -92,14 +92,14 @@ export const columns: ColumnDef<Donation>[] = [
 			return value.includes(row.getValue(id));
 		}
 	},
-	// Price column
+	// amount column
 	{
-		accessorKey: 'price',
+		accessorKey: 'amount',
 		header: () => {
-			const priceHeaderSnippet = createRawSnippet(() => ({
-				render: () => `<div class="text-right">Price</div>`
+			const amountHeaderSnippet = createRawSnippet(() => ({
+				render: () => `<div class="text-right">amount</div>`
 			}));
-			return renderSnippet(priceHeaderSnippet, '');
+			return renderSnippet(amountHeaderSnippet, '');
 		},
 		cell: ({ row }) => {
 			const formatter = new Intl.NumberFormat('en-US', {
@@ -107,14 +107,14 @@ export const columns: ColumnDef<Donation>[] = [
 				currency: 'USD'
 			});
 
-			const priceCellSnippet = createRawSnippet<[string]>((getPrice) => {
-				const price = getPrice();
+			const amountCellSnippet = createRawSnippet<[string]>((getamount) => {
+				const amount = getamount();
 				return {
-					render: () => `<div class="text-right font-medium">${price}</div>`
+					render: () => `<div class="text-right font-medium">${amount}</div>`
 				};
 			});
 
-			return renderSnippet(priceCellSnippet, formatter.format(parseFloat(row.getValue('price'))));
+			return renderSnippet(amountCellSnippet, formatter.format(parseFloat(row.getValue('amount'))));
 		},
 		enableHiding: false
 	},

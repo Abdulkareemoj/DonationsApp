@@ -39,14 +39,14 @@
   <DropdownMenu.Content align="end">
     <DropdownMenu.Group>
       <DropdownMenu.GroupHeading>Actions</DropdownMenu.GroupHeading>
-      <DropdownMenu.Item on:click={copyId}>
+      <DropdownMenu.Item onclick={copyId}>
         Copy donation ID
       </DropdownMenu.Item>
     </DropdownMenu.Group>
     <DropdownMenu.Separator />
-    <DropdownMenu.Item on:click={viewDetails}>View details</DropdownMenu.Item>
-    <DropdownMenu.Item on:click={editDonation}>Edit donation</DropdownMenu.Item>
-    <DropdownMenu.Item on:click={deleteDonation} class="text-red-600">
+    <DropdownMenu.Item onclick={viewDetails}>View details</DropdownMenu.Item>
+    <DropdownMenu.Item onclick={editDonation}>Edit donation</DropdownMenu.Item>
+    <DropdownMenu.Item onclick={deleteDonation} class="text-red-600">
       Delete donation
     </DropdownMenu.Item>
   </DropdownMenu.Content>
