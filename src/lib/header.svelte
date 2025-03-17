@@ -1,12 +1,16 @@
-<script>
+<script lang="ts">
 	import { Button } from "$lib/components/ui/button";
 	import { Input } from "$lib/components/ui/input";
 	import { Sheet, SheetContent, SheetTrigger } from "$lib/components/ui/sheet";
 	import ModeToggle from "./modeToggle.svelte";
 	import { Menu, Package2, Search } from "lucide-svelte";
-	
+  import { navigateWithTransition } from '$lib/hooks/useViewTransition';
+  
 	let isOpen = false;
-
+ function handleNavigation(url: string, event: MouseEvent) {
+    event.preventDefault();
+    navigateWithTransition(url);
+  }
 </script>
 
 <header class="bg-background/70 sticky top-0 z-50 flex h-16 items-center gap-4 border-b px-4 backdrop-blur md:px-6">
@@ -15,10 +19,10 @@
 			<Package2 class="size-6" />
 			<span class="sr-only">Acme Inc</span>
 		</div>
-		<a href="/" class="text-muted-foreground hover:text-foreground transition-colors">Home</a>
-		<a href="/about" class="text-muted-foreground hover:text-foreground transition-colors">About</a>
-		<a href="/donationspage" class="text-muted-foreground hover:text-foreground transition-colors">Donations</a>
-		<a href="/donationslist" class="text-muted-foreground hover:text-foreground transition-colors">Previous Donations</a>
+		<a href="/" on:click={(e) => handleNavigation('/', e)}  class="text-muted-foreground hover:text-foreground transition-colors">Home</a>
+		<a href="/about" on:click={(e) => handleNavigation('/about', e)}  class="text-muted-foreground hover:text-foreground transition-colors">About</a>
+		<a href="/donationspage" on:click={(e) => handleNavigation('/donationspage', e)}  class="text-muted-foreground hover:text-foreground transition-colors">Donations</a>
+		<a href="/donationslist" on:click={(e) => handleNavigation('/donationslist', e)}  class="text-muted-foreground hover:text-foreground transition-colors">Previous Donations</a>
 	</nav>
 	
 	<Sheet>
@@ -36,10 +40,10 @@
 					<Package2 class="size-6" />
 					<span class="sr-only">Acme Inc</span>
 				</a>
-			<a href="/" class="text-muted-foreground hover:text-foreground ">Home</a>
-		<a href="/about" class="text-muted-foreground hover:text-foreground ">About</a>
-		<a href="/donationspage" class="text-muted-foreground hover:text-foreground ">Donations</a>
-		<a href="/donationslist" class="text-muted-foreground hover:text-foreground ">Previous Donations</a>
+			<a href="/" on:click={(e) => handleNavigation('/', e)}  class="text-muted-foreground hover:text-foreground ">Home</a>
+		<a href="/about"  on:click={(e) => handleNavigation('/about', e)} class="text-muted-foreground hover:text-foreground ">About</a>
+		<a href="/donationspage" on:click={(e) => handleNavigation('/donationspage', e)} class="text-muted-foreground hover:text-foreground ">Donations</a>
+		<a href="/donationslist" on:click={(e) => handleNavigation('/donationslist', e)}  class="text-muted-foreground hover:text-foreground ">Previous Donations</a>
 			</nav>
 		</SheetContent>
 	</Sheet>

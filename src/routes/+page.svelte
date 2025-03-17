@@ -17,11 +17,11 @@
 <main class="min-h-screen bg-background text-foreground">
 
   <!-- Hero Section -->
-  <section class="w-full py-12 md:py-24 lg:py-32">
+  <section class="w-full py-12 md:py-24 lg:py-32" style="view-transition-name: hero-section">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-center justify-center space-y-4 text-center">
         <div class="space-y-2">
-          <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+          <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl" style="view-transition-name: main-heading">
             Support creators you love
           </h1>
           <p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
@@ -32,6 +32,7 @@
           <a 
             href="/donationspage" 
             class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            style="view-transition-name: get-started-button"
           >
             Get Started
           </a>
@@ -46,7 +47,7 @@
     </div>
   </section>
 
-  <!-- Features Section -->
+ <!-- Features Section -->
   <section id="features" class="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-center justify-center space-y-4 text-center">
@@ -95,8 +96,9 @@
     </div>
   </section>
 
+
   <!-- Featured Creator -->
-  <section id="creators" class="w-full py-12 md:py-24 lg:py-32">
+  <section id="creators" class="w-full py-12 md:py-24 lg:py-32" style="view-transition-name: creator-section">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-center justify-center space-y-4 text-center">
         <div class="space-y-2">
@@ -115,18 +117,20 @@
                 src={creator.avatar || "/placeholder.svg"} 
                 alt={creator.name} 
                 class="h-24 w-24 rounded-full border-4 border-background -mt-16 sm:mr-6"
+                style="view-transition-name: creator-avatar"
               />
               <div class="mt-4 sm:mt-0 text-center sm:text-left">
-                <h3 class="text-2xl font-bold">{creator.name}</h3>
+                <h3 class="text-2xl font-bold" style="view-transition-name: creator-name">{creator.name}</h3>
                 <p class="text-muted-foreground">{creator.tagline}</p>
                 <p class="mt-4">{creator.description}</p>
                 <button 
                   onclick={handleSupportClick}
                   class="mt-6 inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  style="view-transition-name: support-button"
                 >
                   Support this creator
                 </button>
-                <a href="/donationspage"> here!!</a>
+                <a href="/donationspage" style="view-transition-name: donations-link"> here!!</a>
               </div>
             </div>
           </div>
@@ -135,9 +139,8 @@
     </div>
   </section>
 
-
   <!-- CTA Section -->
-  <section id="get-started" class="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
+  <section id="get-started" class="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground" style="view-transition-name: cta-section">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-center justify-center space-y-4 text-center">
         <div class="space-y-2">
@@ -155,7 +158,4 @@
       </div>
     </div>
   </section>
-  </main>
-
-
-
+</main>
