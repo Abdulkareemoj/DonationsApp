@@ -1,7 +1,7 @@
 <script lang="ts">
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { donationSchema, type FormSchema } from "./schema";
-    import {
+  import {
     type SuperValidated,
     type Infer,
     superForm,
@@ -13,38 +13,32 @@
   import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
   import { Badge } from '$lib/components/ui/badge';
   import { Checkbox } from '$lib/components/ui/checkbox';
-  
+
   // Import icons
   import { Globe, Twitter, Instagram, Linkedin, Coffee } from 'lucide-svelte';
-  
+
   const MAX_DONATION_IN_NAIRA = 10000;
   const DONATION_IN_NAIRA = 100;
-  
+
   let { data }: { data: { form: SuperValidated<Infer<FormSchema>> } } =
     $props();
- 
-  
 
-   const form = superForm(data.form, {
+  console.log('DonationForm Data:', data);
+
+  const form = superForm(data.form, {
     validators: zodClient(donationSchema),
   });
- 
-  
+
+  console.log('Form:', form);
+
   // Extract what we need from superForm
-  const { form:formData, errors, enhance  } = form;
-  
- 
-  
+  const { form:formData, errors, enhance } = form;
+
   let quantity = 0;
   let quantityError: string | null = null;
-  // let PaystackButton;
+  let isCustomAmount = false;
   
-
-  
-  
-  // Properly type the event parameter
   function handleQuantityChange(e: Event): void {
-    // Type assertion to HTMLInputElement
     const target = e.target as HTMLInputElement;
     const value = parseInt(target.value, 10);
     
@@ -56,6 +50,8 @@
     
     quantity = value;
     $formData.amount = value;
+    $formData.selectedPreset = undefined; // Clear preset selection when custom amount is entered
+    isCustomAmount = true;
   }
   
   const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
@@ -66,6 +62,7 @@
     $formData.selectedPreset = preset;
     $formData.amount = preset;
     quantity = preset;
+    isCustomAmount = false; // Indicate we're using a preset, not custom amount
   }
   
   function selectDonationType(type: string | undefined) {
@@ -78,12 +75,13 @@
   }
 </script>
 
+
 <div class="max-w-6xl mx-auto bg-gray-50 shadow-lg rounded-lg overflow-hidden">
   <div class="flex flex-col md:flex-row">
     <div class="w-full md:w-2/3 p-6">
       <div class="relative">
         <img
-          src="/placeholder.png"
+          src="/placeholder.svg"
           alt="Cover"
           class="w-full h-48 object-cover rounded-lg"
         />
@@ -93,7 +91,7 @@
       </div>
       <div class="flex items-center mt-4">
         <Avatar class="mr-4">
-          <AvatarImage src="/placeholder.png" />
+          <AvatarImage src="/placeholder.svg" />
           <AvatarFallback>HL</AvatarFallback>
         </Avatar>
         <div>
@@ -160,37 +158,26 @@
           <Form.FieldErrors />
         </Form.Field>
 
-        <!-- Private Message Checkbox -->
-        <Form.Field {form} name="privateMessage">
-          <div class="flex items-center space-x-2">
-            <Form.Control>
-              {#snippet children({ props })}
-                <Checkbox {...props} bind:checked={$formData.privateMessage} id="private-message" />
-              {/snippet}
-            </Form.Control>
-            <Form.Label for="private-message" class="text-sm">
-              Private message
-            </Form.Label>
-          </div>
-        </Form.Field>
-
         <!-- Donation Presets -->
-        <div class="flex items-center space-x-2 mt-4">
-          <Coffee class="h-6 w-6" />
+        <div class="mt-6">
+          <h3 class="text-sm font-medium mb-2">Choose a donation amount:</h3>
           <div class="flex items-center space-x-2">
-            {#each presets as preset}
-              <Button
-                type="button"
-                onclick={() => selectPreset(preset)}
-                class={`inline-flex items-center justify-center rounded-full border border-input bg-white text-black px-3 py-1 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground ${
-                  $formData.selectedPreset === preset
-                    ? "bg-primary text-primary-foreground"
-                    : ""
-                }`}
-              >
-                {preset}
-              </Button>
-            {/each}
+            <Coffee class="h-6 w-6" />
+            <div class="flex items-center space-x-2">
+              {#each presets as preset}
+                <Button
+                  type="button"
+                  onclick={() => selectPreset(preset)}
+                  class={`inline-flex items-center justify-center rounded-full border border-input ${
+                    $formData.selectedPreset === preset
+                      ? "bg-primary text-primary-foreground"
+                      : "bg-white text-black"
+                  } px-3 py-1 text-sm font-medium shadow-sm hover:bg-accent hover:text-accent-foreground`}
+                >
+                  {preset}
+                </Button>
+              {/each}
+            </div>
           </div>
         </div>
 
@@ -198,12 +185,20 @@
         <Form.Field {form} name="amount">
           <Form.Control>
             {#snippet children({ props })}
-              <Form.Label>Or you can specify an amount (max: {MAX_DONATION_IN_NAIRA}):</Form.Label>
+              <Form.Label>Or enter a custom amount (max: {MAX_DONATION_IN_NAIRA}):</Form.Label>
               <Input
                 {...props}
                 type="number"
-                value={quantity}
+                value={isCustomAmount ? quantity : ''}
                 oninput={handleQuantityChange}
+                onfocus={() => {
+                  if (!isCustomAmount) {
+                    // Clear preset when focusing on custom amount
+                    $formData.selectedPreset = undefined;
+                    isCustomAmount = true;
+                  }
+                }}
+                placeholder="Enter custom amount"
                 min={100}
                 max={MAX_DONATION_IN_NAIRA}
                 required
@@ -251,22 +246,7 @@
         </Form.Field>
 
         <!-- Submit Button -->
-        <Button type="submit">Submit</Button>
         <Form.Button>Submit</Form.Button>
-
-        <!-- Paystack Integration (if available)
-        {#if isClient && PaystackButton && $formData.donationEmail && $formData.amount >= 100}
-          <div class="mt-4">
-             Paystack integration would go here 
-            For example: -->
-            <!-- <PaystackButton
-              text="Pay with Paystack"
-              email={$formData.donationEmail}
-              amount={$formData.amount * 100}
-              publicKey={publicKey}
-            /> -->
-          <!-- </div> -->
-        <!-- {/if}  -->
       </form>
     </div>
   </div>

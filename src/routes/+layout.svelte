@@ -1,13 +1,15 @@
 <script lang="ts">
   import '../app.css';
   import { ModeWatcher } from "mode-watcher";
-  import Header from "$lib/header.svelte";
+  import Header from "$lib/components/header.svelte";
   import { onMount } from 'svelte';
   import { setupViewTransitions } from '$lib/transitions';
-  import { navigating } from '$app/stores';
-  import { fade } from 'svelte/transition';
+  import { navigating } from '$app/state'; // For Svelte 5
   
   let { children } = $props();
+  
+  // Create a derived value using the new runes syntax
+  const isNavigating = $derived(navigating !== null && navigating !== undefined);
   
   // Set up view transitions on mount
   onMount(() => {
@@ -18,11 +20,12 @@
 <ModeWatcher />
 <Header />
 
-{#if $navigating}
+<!-- Only show overlay when navigating -->
+{#if isNavigating}
   <div class="page-transition-overlay" />
 {/if}
 
-<div class="page-content" class:navigating={$navigating}>
+<div class="page-content" class:navigating={isNavigating}>
   {@render children()}
 </div>
 
