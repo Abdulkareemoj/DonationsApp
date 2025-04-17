@@ -1,105 +1,94 @@
 <script lang="ts">
-  import { zodClient } from 'sveltekit-superforms/adapters';
-  import { donationSchema, type FormSchema } from './schema';
-  import {
-    type SuperValidated,
-    type Infer,
-    superForm,
-    type SuperFormEvents
-  } from 'sveltekit-superforms';
-  import * as Form from '$lib/components/ui/form';
-  import { Button } from '$lib/components/ui/button';
-  import { Input } from '$lib/components/ui/input';
-  import { Textarea } from '$lib/components/ui/textarea';
-  import { Avatar, AvatarImage, AvatarFallback } from '$lib/components/ui/avatar';
-  import { Badge } from '$lib/components/ui/badge';
-  import * as ToggleGroup from '$lib/components/ui/toggle-group';
-  import { tick } from 'svelte'; // Import tick
+import { zodClient } from "sveltekit-superforms/adapters"
+import { donationSchema, type FormSchema } from "./schema"
+import { type SuperValidated, type Infer, superForm } from "sveltekit-superforms"
+import * as Form from "$lib/components/ui/form"
+import { Button } from "$lib/components/ui/button"
+import { Input } from "$lib/components/ui/input"
+import { Textarea } from "$lib/components/ui/textarea"
+import { Avatar, AvatarImage, AvatarFallback } from "$lib/components/ui/avatar"
+import { Badge } from "$lib/components/ui/badge"
+import * as ToggleGroup from "$lib/components/ui/toggle-group"
+import { Label } from "$lib/components/ui/label"
+import { Globe, Twitter, Instagram, Linkedin, Coffee } from "lucide-svelte"
+import { tick } from "svelte"
 
-  import { Globe, Twitter, Instagram, Linkedin, Coffee } from 'lucide-svelte';
+// Constants
+const MAX_DONATION_IN_NAIRA = 10000
+const presets = [100, 500, 1000, 5000, 10000]
 
-  const MAX_DONATION_IN_NAIRA = 10000;
-  const DONATION_IN_NAIRA = 100;
+// Props
+export let data
 
-  let { data }: { data: { form: SuperValidated<Infer<FormSchema>> } } =
-    $props();
+// Initialize form with superForm
+const form = superForm(data.form, {
+  validators: zodClient(donationSchema),
+  resetForm: false,
+  onUpdate: ({ form }) => {
+    console.log("Form updated:", form)
+  },
+  onSubmit: async ({ formData, cancel }) => {
+    console.log("Form submitted with values:", Object.fromEntries(formData))
 
-  console.log('DonationForm Data:', data);
-
-  const form = superForm<Infer<FormSchema>>(data.form, {
-    validators: zodClient(donationSchema)
-  });
-  console.log('Form:', form);
-
-  // Extract what we need from superForm
-  const { form: formData, errors, enhance } = form;
-
-  let quantity = $state(0);
-  let quantityError = $state<string | null>(null);
-  let isCustomAmount = $state(false);
-
-  async function handleQuantityChange(e: Event): Promise<void> {
-    const target = e.target as HTMLInputElement;
-    const value = parseInt(target.value, 10);
-
-    if (value > MAX_DONATION_IN_NAIRA) {
-      quantityError = `Maximum donation amount is ${MAX_DONATION_IN_NAIRA}`;
-    } else {
-      quantityError = null;
+    // Ensure amount is set before submission
+    if (!formData.get("amount") && formData.get("selectedPreset")) {
+      formData.set("amount", formData.get("selectedPreset"))
     }
 
-    quantity = value;
-    $formData.amount = value;
-    $formData.selectedPreset = undefined; // Clear preset selection when custom amount is entered
-    isCustomAmount = true;
-
-    await tick(); // Ensure Svelte updates the form
-    console.log('formData after handleQuantityChange:', $formData);
-  }
-
-  const presets = [100, 500, 1000, 5000, 10000];
-
-  async function selectDonationType(type: string | undefined): Promise<void> {
-    $formData.selectedDonation = type;
-    await tick(); // Ensure Svelte updates the form
-    console.log('formData after selectDonationType:', $formData);
-  }
-
-  async function selectPreset(preset: number): Promise<void> {
-    $formData.selectedPreset = preset;
-    $formData.amount = preset; // Make sure amount is set for form submission
-    quantity = preset;
-    isCustomAmount = false;
-    await tick(); // Ensure Svelte updates the form
-    console.log('formData after selectPreset:', $formData);
-  }
-
-  async function switchToCustomAmount(): Promise<void> {
-    $formData.selectedPreset = undefined;
-    isCustomAmount = true;
-    await tick(); // Ensure Svelte updates the form
-    // Focus the input field after switching
-    setTimeout(() => {
-      document.querySelector('input[name="amount"]')?.focus();
-    }, 0);
-  }
-
-  async function handleSubmit() {
-    // Before form submission, ensure the amount is correctly set
-    if ($formData.selectedPreset !== undefined) {
-      $formData.amount = $formData.selectedPreset;
-    } else if (isCustomAmount) {
-      $formData.amount = quantity;
+    // Validate amount is present
+    if (!formData.get("amount") && !formData.get("selectedPreset")) {
+      quantityError = "Please select or enter a donation amount"
+      cancel()
+      return
     }
-    await tick(); // Ensure Svelte updates the form
-    console.log('Form submitted with values:', $formData);
+  },
+})
+  const { form: formData, enhance ,errors,  submitting } = form;
+// Local state
+let isCustomAmount = false
+let quantityError: string | null = null
 
-    // Return the enhance handler
-    return async ({ result, update }) => {
-      console.log('enhance function called');
-      await update({ resetForm: false });
-    };
+// Handle preset amount selection
+function handlePresetAmount(value: string) {
+  if (value === "custom") {
+    isCustomAmount = true
+    $formData.selectedPreset = undefined
+    return
   }
+
+  isCustomAmount = false
+  quantityError = null
+  const numValue = parseInt(value)
+  if (!isNaN(numValue)) {
+    $formData.selectedPreset = numValue
+    $formData.amount = numValue // Set amount to the preset value
+  }
+}
+
+// Handle custom amount input
+function handleCustomAmount(event: Event) {
+  const target = event.target as HTMLInputElement
+  const value = parseInt(target.value, 10)
+
+  if (isNaN(value)) {
+    return
+  }
+
+  if (value > MAX_DONATION_IN_NAIRA) {
+    quantityError = `Maximum donation amount is ${MAX_DONATION_IN_NAIRA}`
+  } else if (value < 100) {
+    quantityError = "Minimum donation amount is 100"
+  } else {
+    quantityError = null
+  }
+
+  isCustomAmount = true
+  $formData.selectedPreset = undefined
+  $formData.amount = value
+}
+
+
+
 </script>
 
 <div
@@ -150,7 +139,8 @@
       />
     </div>
     <div class="w-full md:w-2/5 p-6 bg-gray-200 border-l">
-      <form method="POST" use:enhance={handleSubmit} class="space-y-8">
+      <!-- <form method="POST" use:enhance={handleSubmit} class="space-y-8"> -->
+         <form method="POST" class="space-y-8">
         <!-- Name Field -->
         <Form.Field {form} name="name">
           <Form.Control>
@@ -198,74 +188,27 @@
 
         <!-- Donation Presets using ToggleGroup -->
         <div class="mt-6">
-          <h3 class="text-sm font-medium mb-2">Choose a donation amount:</h3>
-          <div class="flex items-center space-x-2">
-            <Coffee class="h-6 w-6" />
-            <ToggleGroup.Root
-              type="single"
-              value={$formData.selectedPreset?.toString()}
-              onValueChange={async (value) => {
-                if (value) {
-                  const preset = parseInt(value, 10);
-                  await selectPreset(preset);
-                } else {
-                  // If value is null/undefined (deselected), switch to custom amount
-                  await switchToCustomAmount();
-                }
-              }}
-            >
-              {#each presets as preset}
-                <ToggleGroup.Item
-                  value={preset.toString()}
-                  disabled={isCustomAmount}
-                  class="px-3 py-1 text-sm font-medium rounded-full"
-                >
-                  {preset}
-                </ToggleGroup.Item>
-              {/each}
-            </ToggleGroup.Root>
-          </div>
+        <Label>Choose a donation amount:</Label>
+				<ToggleGroup.Root type="single" value={$formData.selectedPreset?.toString()} onValueChange={handlePresetAmount} class="flex flex-wrap gap-2">
+					<ToggleGroup.Item value="custom" aria-label="Custom amount">
+						<Coffee class="h-4 w-4" />
+					</ToggleGroup.Item>
+					{#each presets as amount}
+						<ToggleGroup.Item value={amount.toString()} aria-label="Amount {amount}">
+							{amount}
+						</ToggleGroup.Item>
+					{/each}
+				</ToggleGroup.Root>
         </div>
 
         <!-- Custom Amount Field -->
         <Form.Field {form} name="amount">
           <Form.Control>
-            {#snippet children({ props })}
-              <div class="flex items-center justify-between">
-                <Form.Label
-                  >Or enter a custom amount (max: {MAX_DONATION_IN_NAIRA}):</Form.Label
-                >
-                {#if $formData.selectedPreset !== undefined}
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onclick={switchToCustomAmount}
-                    class="text-xs text-blue-600 hover:text-blue-800"
-                  >
-                    or use custom amount
-                  </Button>
-                {/if}
-              </div>
-              <Input
-                {...props}
-                type="number"
-                value={isCustomAmount ? quantity : ''}
-                oninput={handleQuantityChange}
-                onfocus={() => {
-                  if (!isCustomAmount) {
-                    // Clear preset when focusing on custom amount
-                    $formData.selectedPreset = undefined;
-                    isCustomAmount = true;
-                  }
-                }}
-                placeholder="Enter custom amount"
-                min={100}
-                max={MAX_DONATION_IN_NAIRA}
-                required
-                disabled={$formData.selectedPreset !== undefined}
-              />
-            {/snippet}
+      	<Label for="amount">Or enter a custom amount (min: 100):</Label>
+				<Input id="amount" type="number" min="100" max="10000" placeholder="Enter custom amount" bind:value={$formData.amount} oninput={handleCustomAmount} disabled={$formData.selectedPreset !== undefined} aria-invalid={$errors.amount ? "true" : undefined} />
+				{#if $errors.amount}
+					<span class="text-sm text-destructive">{$errors.amount}</span>
+				{/if}
           </Form.Control>
           {#if quantityError}
             <span class="text-red-500">{quantityError}</span>
@@ -276,34 +219,11 @@
         <!-- Donation Type Selection -->
         <Form.Field {form} name="selectedDonation">
           <Form.Control>
-            {#snippet children({ props })}
-              <div class="flex mt-4 space-x-2">
-                <Button
-                  type="button"
-                  variant="outline"
-                  class={`flex-1 ${
-                    $formData.selectedDonation === 'one-time'
-                      ? 'bg-gray-800 text-white'
-                      : 'bg-white text-black'
-                  }`}
-                  onclick={async () => await selectDonationType('one-time')}
-                >
-                  One-time
-                </Button>
-                <Button
-                  type="button"
-                  variant="default"
-                  class={`flex-1 ${
-                    $formData.selectedDonation === 'monthly'
-                      ? 'bg-gray-800 text-white'
-                      : 'bg-white text-black'
-                  }`}
-                  onclick={async () => await selectDonationType('monthly')}
-                >
-                  Monthly
-                </Button>
-              </div>
-            {/snippet}
+           		<Label>Donation type:</Label>
+				<ToggleGroup.Root type="single" value={$formData.selectedDonation} onValueChange={(value) => ($formData.selectedDonation = value)} class="flex gap-2">
+					<ToggleGroup.Item value="one-time" class="flex-1">One-time</ToggleGroup.Item>
+					<ToggleGroup.Item value="monthly" class="flex-1">Monthly</ToggleGroup.Item>
+				</ToggleGroup.Root>
           </Form.Control>
         </Form.Field>
 
@@ -312,3 +232,6 @@
     </div>
   </div>
 </div>
+
+
+
