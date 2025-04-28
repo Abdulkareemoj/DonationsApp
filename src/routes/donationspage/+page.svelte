@@ -3,7 +3,7 @@
   import type { PageData } from "./$types.js";
   let { data }: { data: PageData } = $props();
 
-  console.log('Page Data:', data); // Add this line
+  // console.log('Page Data:', data); // Add this line
 </script>
 
 <div>
