@@ -1,63 +1,66 @@
+<!-- Inspiration from https://gist.github.com/struckchure/c99a975e9630a138eab522acf7579cda -->
+
 <script lang="ts">
-  import { onMount } from 'svelte';
-  
+	import { Button } from "$lib/components/ui/button";
+  import { onMount } from "svelte";
+
   export let email: string;
   export let amount: number; // in kobo (multiply by 100 for Naira)
   export let reference: string = new Date().getTime().toString();
   export let publicKey: string;
   export let text: string = "Pay with Paystack";
   export let metadata: Record<string, any> = {};
-  
-  let isClient = $state(false);
+
+  let isClient = false;
   let PaystackPop: any;
-  
+
   onMount(() => {
     isClient = true;
     // Load Paystack script
-    const script = document.createElement('script');
-    script.src = 'https://js.paystack.co/v1/inline.js';
+    const script = document.createElement("script");
+    script.src = "https://js.paystack.co/v1/inline.js";
     script.async = true;
     script.onload = () => {
       PaystackPop = window.PaystackPop;
     };
     document.body.appendChild(script);
   });
-  
+
   function initializePayment() {
     if (!PaystackPop) {
-      console.error('Paystack not loaded');
+      console.error("Paystack not loaded");
       return;
     }
-    
+
     const handler = PaystackPop.setup({
       key: publicKey,
       email,
-      amount,
+      amount: amount * 100, // Convert amount to kobo
       ref: reference,
       metadata,
-      callback: function(response: any) {
-        const event = new CustomEvent('payment:success', { 
-          detail: { reference: response.reference }
+      callback: function (response: any) {
+        const event = new CustomEvent("payment:success", {
+          detail: { reference: response.reference },
         });
         document.dispatchEvent(event);
       },
-      onClose: function() {
-        const event = new CustomEvent('payment:close');
+      onClose: function () {
+        const event = new CustomEvent("payment:close");
         document.dispatchEvent(event);
-      }
+      },
     });
-    
+
     handler.openIframe();
   }
 </script>
 
-<button 
-  on:click={initializePayment}
+<Button
+  onclick={initializePayment}
   class="inline-flex h-10 items-center justify-center rounded-md bg-green-600 px-8 text-sm font-medium text-white shadow transition-colors hover:bg-green-700 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
   disabled={!isClient || !PaystackPop}
 >
   {text}
-</button>
+</Button>
 
 <svelte:head>
   {#if isClient}
