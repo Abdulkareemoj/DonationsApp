@@ -22,7 +22,7 @@
 
 <!-- Only show overlay when navigating -->
 {#if isNavigating}
-  <div class="page-transition-overlay" />
+  <div class="page-transition-overlay" ></div>
 {/if}
 
 <div class="page-content" class:navigating={isNavigating}>
