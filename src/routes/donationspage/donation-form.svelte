@@ -13,7 +13,7 @@
   import { Label } from "$lib/components/ui/label";
   import { Globe, Twitter, Instagram, Linkedin, Coffee } from "lucide-svelte";
   import PaystackButton from "./paystackButton.svelte";
-  import { PAYSTACK_PUBLIC_KEY } from "$env/static/private";
+  import { PUBLIC_PAYSTACK_PUBLIC_KEY } from "$env/static/public";
 
   // Constants
   const MAX_DONATION_IN_NAIRA = 10000;
@@ -261,7 +261,7 @@
   <PaystackButton
     email={$formData.donationEmail}
     amount={Number($formData.amount)} 
-    publicKey={PAYSTACK_PUBLIC_KEY}
+    publicKey={PUBLIC_PAYSTACK_PUBLIC_KEY}
     text="Donate with Paystack"
   />
 {/if}
