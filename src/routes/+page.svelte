@@ -48,7 +48,7 @@
   </section>
 
  <!-- Features Section -->
-  <section id="features" class="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
+  <section id="features" class="w-full py-6 md:py-12 lg:py-16 bg-muted/50">
     <div class="container px-4 md:px-6">
       <div class="flex flex-col items-center justify-center space-y-4 text-center">
         <div class="space-y-2">
