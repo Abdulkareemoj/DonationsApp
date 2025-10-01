@@ -31,14 +31,14 @@
         <div class="space-x-4">
           <a 
             href="/donationspage" 
-            class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            class="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
             style="view-transition-name: get-started-button"
           >
             Get Started
           </a>
           <a 
             href="/about" 
-            class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+            class="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-xs transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
           >
             Learn More
           </a>
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3">
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
@@ -71,7 +71,7 @@
           <h3 class="text-xl font-bold">Create a profile</h3>
           <p class="text-muted-foreground">Set up your page in minutes and share your story with your audience.</p>
         </div>
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
@@ -81,7 +81,7 @@
           <h3 class="text-xl font-bold">Share your link</h3>
           <p class="text-muted-foreground">Share your unique link with your audience on social media or your website.</p>
         </div>
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <circle cx="12" cy="12" r="10"></circle>
@@ -109,8 +109,8 @@
         </div>
       </div>
       <div class="mx-auto max-w-3xl py-12">
-        <div class="rounded-lg border bg-card shadow-sm">
-          <div class="h-32 w-full rounded-t-lg bg-gradient-to-r from-primary/40 to-primary"></div>
+        <div class="rounded-lg border bg-card shadow-xs">
+          <div class="h-32 w-full rounded-t-lg bg-linear-to-r from-primary/40 to-primary"></div>
           <div class="p-6">
             <div class="flex flex-col items-center sm:flex-row sm:items-start">
               <img 
@@ -125,7 +125,7 @@
                 <p class="mt-4">{creator.description}</p>
                 <button 
                   onclick={handleSupportClick}
-                  class="mt-6 inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  class="mt-6 inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                   style="view-transition-name: support-button"
                 >
                   Support this creator
@@ -151,7 +151,7 @@
         </div>
         <a 
           href="https://github.com/abdulkareemoj/donationsapp" 
-          class="inline-flex h-10 items-center justify-center rounded-md bg-background px-8 text-sm font-medium text-primary shadow transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          class="inline-flex h-10 items-center justify-center rounded-md bg-background px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
         >
           Create your page
         </a>

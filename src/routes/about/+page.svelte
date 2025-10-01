@@ -101,7 +101,7 @@
         </div>
       </div>
       <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3">
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
@@ -111,7 +111,7 @@
           <h3 class="text-xl font-bold">Transparency</h3>
           <p class="text-center text-muted-foreground">We believe in clear, fair pricing and open communication with our community.</p>
         </div>
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path>
@@ -120,7 +120,7 @@
           <h3 class="text-xl font-bold">Creator First</h3>
           <p class="text-center text-muted-foreground">Every decision we make puts creators' needs at the center.</p>
         </div>
-        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+        <div class="flex flex-col items-center space-y-4 rounded-lg border bg-card p-6 shadow-xs">
           <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6">
               <path d="M12 2v20"></path>
@@ -184,7 +184,7 @@
       </div>
       <div class="mx-auto grid max-w-5xl grid-cols-1 gap-6 py-12 md:grid-cols-3">
         {#each testimonials as testimonial}
-          <div class="flex flex-col justify-between space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+          <div class="flex flex-col justify-between space-y-4 rounded-lg border bg-card p-6 shadow-xs">
             <div>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-8 w-8 text-primary/20">
                 <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
@@ -234,7 +234,7 @@
             </div>
           </div>
         </div>
-        <div class="rounded-lg border bg-card p-6 shadow-sm">
+        <div class="rounded-lg border bg-card p-6 shadow-xs">
           <form class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-2">
@@ -243,7 +243,7 @@
                 </label>
                 <input
                   id="first-name"
-                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
                   placeholder="Enter your first name"
                 />
               </div>
@@ -253,7 +253,7 @@
                 </label>
                 <input
                   id="last-name"
-                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
                   placeholder="Enter your last name"
                 />
               </div>
@@ -265,7 +265,7 @@
               <input
                 id="email"
                 type="email"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
                 placeholder="Enter your email"
               />
             </div>
@@ -275,13 +275,13 @@
               </label>
               <textarea
                 id="message"
-                class="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
+                class="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-foreground"
                 placeholder="Enter your message"
               ></textarea>
             </div>
             <button 
               type="submit"
-              class="inline-flex h-10 items-center justify-center rounded-md bg-background px-8 text-sm font-medium text-primary shadow transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              class="inline-flex h-10 items-center justify-center rounded-md bg-background px-8 text-sm font-medium text-primary shadow-sm transition-colors hover:bg-accent focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
             >
               Send Message
             </button>

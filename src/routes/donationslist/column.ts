@@ -84,7 +84,7 @@ export const columns: ColumnDef<Donation>[] = [
 		cell: ({ row }) => {
 			const status = row.getValue('status') as string;
 			return renderComponent(Badge, {
-				variant: 'outline',
+				variant: 'outline-solid',
 				children: status
 			});
 		},
