@@ -43,21 +43,28 @@
       role: "Writer & Educator"
     }
   ];
-</script>
+
+  import Seo from '$lib/components/Seo.svelte'
+ </script>
+<Seo title="About — DonationsApp" description="Learn about our mission to empower the creator economy." />
 
 <main class="min-h-screen bg-background text-foreground">
 
 
   <!-- Hero Section -->
-  <section class="w-full py-12 md:py-24 lg:py-32 bg-muted/50">
+  <section class="relative w-full py-16 md:py-28 lg:py-32">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute left-1/2 top-[-140px] h-[320px] w-[880px] -translate-x-1/2 rounded-full bg-primary/20 blur-3xl"></div>
+      <div class="absolute right-[-200px] bottom-[-160px] h-[260px] w-[520px] rounded-full bg-muted/60 blur-3xl"></div>
+    </div>
     <div class="container px-4 md:px-6">
-      <div class="flex flex-col items-center justify-center space-y-4 text-center">
-        <div class="space-y-2">
-          <h1 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About DonationsApp</h1>
-          <p class="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            We're on a mission to empower creators to do what they love and get paid for it.
-          </p>
-        </div>
+      <div class="mx-auto max-w-3xl text-center">
+        <span class="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
+          <span class="h-1.5 w-1.5 rounded-full bg-primary"></span>
+          Our story
+        </span>
+        <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Built for creators, by creators</h1>
+        <p class="mt-4 text-muted-foreground md:text-lg">We're on a mission to empower creators to do what they love and get paid for it.</p>
       </div>
     </div>
   </section>
@@ -129,6 +136,26 @@
           </div>
           <h3 class="text-xl font-bold">Simplicity</h3>
           <p class="text-center text-muted-foreground">We keep our platform simple and intuitive so creators can focus on creating.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats strip -->
+  <section class="w-full py-8">
+    <div class="container px-4 md:px-6">
+      <div class="mx-auto grid max-w-5xl grid-cols-1 gap-4 text-center md:grid-cols-3">
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-3xl font-bold">10k+</div>
+          <div class="text-sm text-muted-foreground">Active creators</div>
+        </div>
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-3xl font-bold">$5M+</div>
+          <div class="text-sm text-muted-foreground">Processed donations</div>
+        </div>
+        <div class="rounded-lg border bg-card p-6">
+          <div class="text-3xl font-bold">30+</div>
+          <div class="text-sm text-muted-foreground">Supported countries</div>
         </div>
       </div>
     </div>
