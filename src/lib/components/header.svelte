@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
+	import { ArrowRight } from 'lucide-svelte';
 	import { Sheet, SheetContent, SheetTrigger } from '$lib/components/ui/sheet';
 	import ModeToggle from './modeToggle.svelte';
 	import { Menu, Package2, Search } from 'lucide-svelte';
@@ -58,13 +58,13 @@
 		<!-- Right actions -->
 		<div class="flex items-center gap-3">
 			<ModeToggle />
-			<a
+			<Button
 				href="/donationspage"
 				on:click={(e) => handleNavigation('/donationspage', e)}
 				class="bg-primary text-primary-foreground hover:bg-primary/90 hidden h-9 items-center justify-center rounded-md px-4 text-xs font-medium shadow-sm transition-colors md:inline-flex"
 			>
-				Donate
-			</a>
+				Donate<ArrowRight />
+			</Button>
 			<Sheet>
 				<SheetTrigger>
 					{#snippet child({ props })}
@@ -107,13 +107,9 @@
 					</nav>
 					<div class="mt-6 flex items-center gap-3">
 						<ModeToggle />
-						<a
-							href="/donationspage"
-							on:click={(e) => handleNavigation('/donationspage', e)}
-							class="bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-9 items-center justify-center rounded-md px-4 text-xs font-medium shadow-sm transition-colors"
-						>
-							Donate
-						</a>
+						<Button href="/donationspage" on:click={(e) => handleNavigation('/donationspage', e)}>
+							Donate <ArrowRight />
+						</Button>
 					</div>
 				</SheetContent>
 			</Sheet>
