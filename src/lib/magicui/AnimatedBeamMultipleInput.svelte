@@ -20,7 +20,7 @@
 <div
 	bind:this={containerRef}
 	class={cn(
-		'bg-background relative flex w-full max-w-[500px] items-center justify-center overflow-hidden rounded-lg ',
+		'bg-background relative mx-auto flex w-full max-w-[500px] items-center justify-center overflow-hidden rounded-lg ',
 		className
 	)}
 >

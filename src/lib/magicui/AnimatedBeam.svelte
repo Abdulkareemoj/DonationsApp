@@ -33,13 +33,13 @@
 				x2: ['100%', '0%'],
 				y1: ['0%', '0%'],
 				y2: ['0%', '0%']
-		  }
+			}
 		: {
 				x1: ['10%', '110%'],
 				x2: ['0%', '100%'],
 				y1: ['0%', '0%'],
 				y2: ['0%', '0%']
-		  };
+			};
 
 	const updatePath = () => {
 		if (!containerRef || !fromRef || !toRef) return;
@@ -87,7 +87,7 @@
 		width={svgDimensions.width}
 		height={svgDimensions.height}
 		xmlns="http://www.w3.org/2000/svg"
-		class={cn('pointer-events-none absolute left-0 top-0 transform-gpu stroke-2', className)}
+		class={cn('pointer-events-none absolute top-0 left-0 transform-gpu stroke-2', className)}
 		viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
 	>
 		<path
@@ -97,7 +97,13 @@
 			stroke-opacity={pathOpacity}
 			stroke-linecap="round"
 		/>
-		<path d={pathD} stroke-width={pathWidth} stroke={`url(#${id})`} stroke-opacity="1" stroke-linecap="round" />
+		<path
+			d={pathD}
+			stroke-width={pathWidth}
+			stroke={`url(#${id})`}
+			stroke-opacity="1"
+			stroke-linecap="round"
+		/>
 		<defs>
 			<M.linearGradient />
 			<Motion
@@ -123,7 +129,7 @@
 				isSVG={true}
 				let:motion
 			>
-				<linearGradient use:motion id={id} gradientUnits="userSpaceOnUse" class="transform-gpu">
+				<linearGradient use:motion {id} gradientUnits="userSpaceOnUse" class="transform-gpu">
 					<stop stop-color={gradientStartColor} stop-opacity="0" />
 					<stop stop-color={gradientStartColor} />
 					<stop offset="32.5%" stop-color={gradientStopColor} />
