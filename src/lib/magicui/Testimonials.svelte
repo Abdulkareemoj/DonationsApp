@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Marquee from '$lib/magicui/Marquee.svelte';
-	import ReviewCard from '../components/Reviewcard.svelte';
+	import ReviewCard from '$lib/magicui/Reviewcard.svelte';
 
 	const reviews = [
 		{
