@@ -1,6 +1,5 @@
 @import 'tailwindcss';
-
-@config '../tailwind.config.ts';
+@import 'tw-animate-css';
 
 /*
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
@@ -70,7 +69,7 @@
 }
 
 .dark {
-	--background: oklch(0.21 0.04 264.04);
+	--background: oklch(19.658% 0.02799 264.947);
 	--foreground: oklch(0.93 0.01 256.71);
 	--card: oklch(0.28 0.04 260.33);
 	--card-foreground: oklch(0.93 0.01 256.71);
@@ -238,5 +237,59 @@
 	to {
 		transform: translateX(-30px);
 		opacity: 0;
+	}
+}
+
+/* Define your custom keyframes */
+@keyframes marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(calc(-100% - var(--gap)));
+	}
+}
+
+@keyframes marquee-vertical {
+	from {
+		transform: translateY(0);
+	}
+	to {
+		transform: translateY(calc(-100% - var(--gap)));
+	}
+}
+
+/* Extend Tailwind's theme with your custom animations */
+@layer utilities {
+	.animate-marquee {
+		animation-name: marquee;
+		animation-duration: var(--duration);
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+
+	.animate-marquee-vertical {
+		animation-name: marquee-vertical;
+		animation-duration: var(--duration);
+		animation-timing-function: linear;
+		animation-iteration-count: infinite;
+	}
+
+	@keyframes marquee {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			transform: translateX(calc(-100% - var(--gap)));
+		}
+	}
+
+	@keyframes marquee-vertical {
+		from {
+			transform: translateY(0);
+		}
+		to {
+			transform: translateY(calc(-100% - var(--gap)));
+		}
 	}
 }
