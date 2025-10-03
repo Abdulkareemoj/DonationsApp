@@ -1,6 +1,7 @@
 <script>
-	import AnimatedBeamMultipleInput from '$lib/components/AnimatedBeamMultipleInput.svelte';
 	import { onMount } from 'svelte';
+	import SimpleVariant from '$lib/magicui/custom-card/SimpleVariant.svelte';
+	import SquareCard from '$lib/components/ui/square-card/SquareCard.svelte';
 	// Creator information
 	const creator = {
 		name: 'Sarah Johnson',
@@ -16,6 +17,9 @@
 		// In a real app, this would open a payment modal or redirect to a payment page
 	}
 	import Seo from '$lib/components/Seo.svelte';
+	import Globe from '$lib/magicui/Globe.svelte';
+	import AnimatedBeamMultipleInput from '$lib/magicui/AnimatedBeamMultipleInput.svelte';
+	import Marquee from '$lib/magicui/Marquee.svelte';
 
 	let mounted = false;
 	onMount(() => {
@@ -41,7 +45,7 @@
 
 	<!-- Hero Section -->
 	<section class="w-full py-16 md:py-28 lg:py-32" style="view-transition-name: hero-section">
-		<div class="container px-4 md:px-6">
+		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="grid items-center gap-8 lg:grid-cols-2">
 				<div class="space-y-6 text-center lg:text-left">
 					<span
@@ -89,42 +93,60 @@
 					</div>
 				</div>
 				<div class="relative mx-auto w-full max-w-xl">
-					<div
-						class="from-primary/20 absolute inset-0 rounded-2xl bg-gradient-to-tr to-transparent blur-2xl"
-					></div>
-					<div
-						class="bg-card/70 relative rounded-2xl border p-6 shadow-sm backdrop-blur"
-						style="view-transition-name: hero-card"
-					>
-						<div class="flex items-center gap-4">
-							<img
-								src={creator.avatar}
-								alt="Avatar"
-								class="h-14 w-14 rounded-full"
-								style="view-transition-name: creator-avatar"
-							/>
-							<div>
-								<p class="text-muted-foreground text-sm">Featured creator</p>
-								<p class="font-semibold">{creator.name}</p>
+					<SimpleVariant>
+						<div
+							class="bg-card/70 relative p-6 backdrop-blur"
+							style="view-transition-name: hero-card"
+						>
+							<div class="flex items-center gap-4">
+								<img
+									src={creator.avatar}
+									alt="Avatar"
+									class="h-14 w-14 rounded-full"
+									style="view-transition-name: creator-avatar"
+								/>
+								<div>
+									<p class="text-muted-foreground text-sm">Featured creator</p>
+									<p class="font-semibold">{creator.name}</p>
+								</div>
+							</div>
+							<p class="text-muted-foreground mt-4 text-sm">“{creator.description}”</p>
+							<div class="mt-6 grid grid-cols-3 divide-x rounded-lg border">
+								<div class="p-4 text-center">
+									<div class="text-2xl font-bold">12k+</div>
+									<div class="text-muted-foreground text-xs">Supporters</div>
+								</div>
+								<div class="p-4 text-center">
+									<div class="text-2xl font-bold">$480k</div>
+									<div class="text-muted-foreground text-xs">Raised</div>
+								</div>
+								<div class="p-4 text-center">
+									<div class="text-2xl font-bold">92%</div>
+									<div class="text-muted-foreground text-xs">Recurring</div>
+								</div>
 							</div>
 						</div>
-						<p class="text-muted-foreground mt-4 text-sm">“{creator.description}”</p>
-						<div class="mt-6 grid grid-cols-3 divide-x rounded-lg border">
-							<div class="p-4 text-center">
-								<div class="text-2xl font-bold">12k+</div>
-								<div class="text-muted-foreground text-xs">Supporters</div>
-							</div>
-							<div class="p-4 text-center">
-								<div class="text-2xl font-bold">$480k</div>
-								<div class="text-muted-foreground text-xs">Raised</div>
-							</div>
-							<div class="p-4 text-center">
-								<div class="text-2xl font-bold">92%</div>
-								<div class="text-muted-foreground text-xs">Recurring</div>
-							</div>
-						</div>
-					</div>
+					</SimpleVariant>
 				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Globe-->
+	<section class="container mx-auto w-full max-w-5xl py-6 md:py-5">
+		<div class="flex h-[80vh] w-full items-center justify-center">
+			<div
+				class="bg-background relative flex h-fit w-full items-center justify-center overflow-hidden rounded-lg border px-10 pt-8 pb-40 md:pb-60 md:shadow-xl"
+			>
+				<span
+					class="pointer-events-none bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl leading-none font-semibold whitespace-pre-wrap text-transparent select-none dark:from-slate-700 dark:to-slate-50"
+				>
+					Donate From Anywhere
+				</span>
+				<Globe class="top-35" />
+				<div
+					class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
+				/>
 			</div>
 		</div>
 	</section>
@@ -140,7 +162,7 @@
 
 	<!-- Features Section -->
 	<section id="features" class="bg-muted/40 w-full py-12 md:py-20">
-		<div class="container px-4 md:px-6">
+		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="mx-auto max-w-2xl text-center">
 				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
 					Everything you need to get supported
@@ -245,21 +267,21 @@
 
 	<!-- Testimonials -->
 	<section class="bg-muted/40 w-full py-12 md:py-20">
-		<div class="container px-4 md:px-6">
-			<div class="grid gap-6 md:grid-cols-3">
-				<div class="bg-card rounded-xl border p-6 text-sm shadow-xs">
-					“Switching to this platform doubled my monthly support.”
-					<div class="mt-4 font-semibold">Alex • Podcaster</div>
-				</div>
-				<div class="bg-card rounded-xl border p-6 text-sm shadow-xs">
-					“Setup took minutes and my donors love the simplicity.”
-					<div class="mt-4 font-semibold">Maya • Designer</div>
-				</div>
-				<div class="bg-card rounded-xl border p-6 text-sm shadow-xs">
-					“The analytics help me plan content around supporter peaks.”
-					<div class="mt-4 font-semibold">Ken • Developer</div>
-				</div>
-			</div>
+		<div class="container mx-auto w-full px-4 md:px-6">
+			<Marquee pauseOnHover class=" gap-5 [--duration:20s]">
+				<SquareCard
+					description="“Switching to this platform doubled my monthly support.”"
+					title="Alex • Podcaster"
+				/>
+				<SquareCard
+					description="“Setup took minutes and my donors love the simplicity.”"
+					title="Maya • Designer"
+				/>
+				<SquareCard
+					description="“The analytics help me plan content around supporter peaks.”"
+					title="Ken • Developer"
+				/></Marquee
+			>
 		</div>
 	</section>
 
@@ -269,7 +291,7 @@
 		class="w-full py-16 md:py-24 lg:py-28"
 		style="view-transition-name: cta-section"
 	>
-		<div class="container px-4 md:px-6">
+		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="bg-primary text-primary-foreground rounded-2xl border px-6 py-12 shadow-sm">
 				<div class="mx-auto flex max-w-3xl flex-col items-center text-center">
 					<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Ready to get supported?</h2>
@@ -295,7 +317,7 @@
 
 	<!-- Quick Start -->
 	<section class="w-full py-12 md:py-20">
-		<div class="container px-4 md:px-6">
+		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="mx-auto max-w-2xl text-center">
 				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Get started in minutes</h2>
 				<p class="text-muted-foreground mt-3">It’s this simple to launch your donations page.</p>
@@ -324,7 +346,7 @@
 
 	<!-- FAQ -->
 	<section class="bg-muted/40 w-full py-12 md:py-20">
-		<div class="container px-4 md:px-6">
+		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="mx-auto max-w-2xl text-center">
 				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Frequently asked questions</h2>
 				<p class="text-muted-foreground mt-3">Answers to the most common questions.</p>
