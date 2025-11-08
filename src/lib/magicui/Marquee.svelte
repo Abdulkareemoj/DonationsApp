@@ -11,7 +11,7 @@
 
 <div
 	class={cn(
-		'group flex [gap:var(--gap)] overflow-hidden p-2 [--duration:2s] [--gap:1rem]',
+		'group flex gap-(--gap) overflow-hidden p-2 [--duration:2s] [--gap:1rem]',
 		{
 			'flex-row': !vertical,
 			'flex-col': vertical
@@ -21,11 +21,11 @@
 >
 	{#each { length: repeat } as _, i (i)}
 		<div
-			class={cn('flex shrink-0 justify-around [gap:var(--gap)]', {
+			class={cn('flex shrink-0 justify-around gap-(--gap)', {
 				'animate-marquee flex-row': !vertical,
 				'animate-marquee-vertical flex-col': vertical,
-				'group-hover:[animation-play-state:paused]': pauseOnHover,
-				'[animation-direction:reverse]': reverse
+				'group-hover:paused': pauseOnHover,
+				'direction-[reverse]': reverse
 			})}
 		>
 			<slot>Default</slot>

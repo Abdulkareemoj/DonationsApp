@@ -83,9 +83,9 @@
 	});
 </script>
 
-<main class={cn('absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]', className)}>
+<main class={cn('absolute inset-0 mx-auto aspect-square w-full max-w-[600px]', className)}>
 	<canvas
-		class="h-full w-full [contain:layout_paint_size]"
+		class="h-full w-full contain-[layout_paint_size]"
 		bind:this={canvas}
 		on:pointerdown={(e) => {
 			pointerInteracting = e.clientX - pointerInteractionMovement;

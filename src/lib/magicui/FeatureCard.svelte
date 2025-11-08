@@ -77,7 +77,7 @@
 		<div class="mx-auto max-w-6xl">
 			<div class="mx-auto my-12 grid h-full items-center gap-10 lg:grid-cols-2">
 				<div
-					class="order-1 hidden lg:order-none lg:flex {ltr
+					class="order-1 hidden lg:order-0 lg:flex {ltr
 						? 'lg:order-2 lg:justify-end'
 						: 'justify-start'} "
 				>
@@ -142,7 +142,7 @@
 						<img
 							src={data[$currentIndex].image}
 							alt="feature"
-							class="aspect-auto size-full rounded-xl border border-neutral-300/50 object-cover object-left-top p-1 shadow-lg"
+							class="aspect-auto size-full rounded-xl border border-neutral-300/50 object-cover object-top-left p-1 shadow-lg"
 						/>
 					{:else if data[$currentIndex]?.video}
 						<video
@@ -161,7 +161,7 @@
 				</div>
 
 				<div
-					class="relative -mb-8 [mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] pb-0.5 [-webkit-mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] md:hidden"
+					class="relative -mb-8 mask-[linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] pb-0.5 [-webkit-mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] md:hidden"
 				>
 					{#each data as _, index}
 						<div
@@ -179,7 +179,7 @@
 				</div>
 				<ul
 					bind:this={carouselRef}
-					class="relative flex h-full snap-x snap-mandatory flex-nowrap overflow-x-auto [mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] [-ms-overflow-style:none] [-webkit-mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
+					class="relative flex h-full snap-x snap-mandatory flex-nowrap overflow-x-auto mask-[linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] [-ms-overflow-style:none] [-webkit-mask-image:linear-gradient(90deg,transparent,black_20%,white_80%,transparent)] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden"
 				>
 					{#each data as item, index}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->

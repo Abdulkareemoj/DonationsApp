@@ -25,7 +25,7 @@
 	)}
 >
 	<div
-		class="absolute top-0 right-5 h-px w-1/2 bg-gradient-to-l from-transparent via-white/30 via-10% to-transparent"
+		class="absolute top-0 right-5 h-px w-1/2 bg-linear-to-l from-transparent via-white/30 via-10% to-transparent"
 	/>
 
 	<div class="flex h-full w-full flex-row items-center justify-between gap-10">
