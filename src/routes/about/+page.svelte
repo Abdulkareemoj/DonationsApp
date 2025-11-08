@@ -132,7 +132,7 @@
 
 	<!-- Our Values -->
 	<section class="bg-muted/50 w-full py-8 md:py-18 lg:py-20">
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="flex flex-col items-center justify-center space-y-4 text-center">
 				<div class="space-y-2">
 					<h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">Our Values</h2>
@@ -227,7 +227,7 @@
 
 	<!-- Stats strip -->
 	<section class="w-full py-8">
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="pb-8">
 				<div class="flex flex-col items-center justify-center space-y-4 text-center">
 					<h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">Stats</h2>
@@ -259,7 +259,7 @@
 
 	<!-- Testimonials -->
 	<section class="w-full py-8 md:py-18 lg:py-20">
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="flex flex-col items-center justify-center space-y-4 text-center">
 				<div class="space-y-2">
 					<h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">What Creators Say</h2>
@@ -310,7 +310,7 @@
 
 	<!-- Contact Section -->
 	<section class="bg-primary text-primary-foreground w-full py-12 md:py-24 lg:py-32">
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="grid items-center gap-6 lg:grid-cols-2 lg:gap-12">
 				<div class="space-y-4">
 					<h2 class="text-3xl font-bold tracking-tighter sm:text-4xl">Get in Touch</h2>

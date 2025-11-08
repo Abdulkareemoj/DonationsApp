@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
 	import SimpleVariant from '$lib/magicui/custom-card/SimpleVariant.svelte';
-	import SquareCard from '$lib/components/ui/square-card/SquareCard.svelte';
 	// Creator information
 	const creator = {
 		name: 'Sarah Johnson',
@@ -20,6 +19,7 @@
 	import Globe from '$lib/magicui/Globe.svelte';
 	import AnimatedBeamMultipleInput from '$lib/magicui/AnimatedBeamMultipleInput.svelte';
 	import Marquee from '$lib/magicui/Marquee.svelte';
+	import SquareCard from '$lib/magicui/square-card/SquareCard.svelte';
 
 	let mounted = false;
 	onMount(() => {
@@ -28,7 +28,7 @@
 </script>
 
 <Seo
-	title="DonationsApp — Home"
+	title="DonationsApp - Home"
 	description="Support creators you love with one-time or monthly donations."
 />
 
@@ -44,7 +44,7 @@
 	</div>
 
 	<!-- Hero Section -->
-	<section class="w-full py-16 md:py-28 lg:py-32" style="view-transition-name: hero-section">
+	<section class="w-full py-8 md:py-28 lg:py-16" style="view-transition-name: hero-section">
 		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="grid items-center gap-8 lg:grid-cols-2">
 				<div class="space-y-6 text-center lg:text-left">
@@ -152,13 +152,15 @@
 	</section>
 
 	<!-- Logos / Social proof -->
-	<section class="w-full py-4">
-		<div class="container px-4 md:px-6">
-			<div class="flex flex-wrap items-center justify-center gap-8 opacity-70">
-				<div class="text-xs">Trusted by thousands of creators worldwide</div>
+	<!-- <section class="">
+		<div class="px-4 md:px-6">
+			<div class="mx-auto max-w-2xl text-center">
+				<h2 class="text-xl font-bold tracking-tight sm:text-4xl">
+					Trusted by thousands of creators worldwide
+				</h2>
 			</div>
 		</div>
-	</section>
+	</section> -->
 
 	<!-- Features Section -->
 	<section id="features" class="bg-muted/40 w-full py-12 md:py-20">
@@ -221,7 +223,7 @@
 		class="w-full py-12 md:py-20"
 		style="view-transition-name: creator-section"
 	>
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="mx-auto max-w-2xl text-center">
 				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Featured creator</h2>
 				<p class="text-muted-foreground mt-3">
