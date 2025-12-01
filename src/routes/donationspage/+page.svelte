@@ -9,6 +9,7 @@
 <Seo
 	title="Donate - DonationsApp"
 	description="Make a one-time or monthly donation to support this creator."
+	pageName="donate"
 />
 
 <div>

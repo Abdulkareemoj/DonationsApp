@@ -30,6 +30,7 @@
 <Seo
 	title="DonationsApp - Home"
 	description="Support creators you love with one-time or monthly donations."
+	pageName="home"
 />
 
 <main class="bg-background text-foreground min-h-screen">

@@ -1,7 +1,6 @@
 <script>
 	import FeatureCard from '$lib/magicui/FeatureCard.svelte';
 	import { Eye, PackageSearch, Settings } from 'lucide-svelte';
-	// Company milestones
 
 	// Testimonials
 	const testimonials = [
@@ -64,6 +63,7 @@
 <Seo
 	title="About — DonationsApp"
 	description="Learn about our mission to empower the creator economy."
+	pageName="about"
 />
 
 <main class="bg-background text-foreground min-h-screen">
