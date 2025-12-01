@@ -15,7 +15,7 @@
 
 <header class="sticky top-0 z-50 w-full">
 	<div
-		class="bg-background/60 supports-[backdrop-filter]:bg-background/50 mx-auto flex h-16 items-center justify-between gap-4 border-b px-4 backdrop-blur md:px-6"
+		class="bg-background/60 supports-backdrop-filter:bg-background/50 mx-auto flex h-16 items-center justify-between gap-4 border-b px-4 backdrop-blur md:px-6"
 	>
 		<!-- Left spacer for centering on desktop -->
 		<a
