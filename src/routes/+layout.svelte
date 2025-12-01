@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
-	import Header from '../lib/components/Header.svelte';
+	import Header from '$components/Header.svelte';
 	import { onMount } from 'svelte';
 	import { setupViewTransitions } from '$lib/transitions';
 	import { navigating } from '$app/state'; // For Svelte 5
