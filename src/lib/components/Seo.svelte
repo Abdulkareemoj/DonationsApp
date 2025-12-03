@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
-	export let title: string = 'DonationsApp — Support creators you love';
-	export let description: string =
-		'A simple way to support your favorite creators with one-time or monthly donations.';
-	export let type: string = 'website';
-	export let siteName: string = 'DonationsApp';
+	let {
+		title = 'DonationsApp — Support creators you love',
+		description = 'A simple way to support your favorite creators with one-time or monthly donations.',
+		type = 'website',
+		siteName = 'DonationsApp'
+	} = $props();
 
 	// Always use the /og endpoint for the image
-	$: ogImageUrl = `${$page.url.origin}/og`;
-	$: currentUrl = $page.url.href;
+	let ogImageUrl = $derived(`${page.url.origin}/og`);
+	let currentUrl = $derived(page.url.href);
 </script>
 
 <svelte:head>
