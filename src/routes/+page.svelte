@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import * as Accordion from '$lib/components/ui/accordion';
 	import SimpleVariant from '$lib/magicui/custom-card/SimpleVariant.svelte';
 	// Creator information
 	const creator = {
@@ -9,6 +10,23 @@
 		description:
 			'I create digital art and illustrations inspired by nature and fantasy. Your support helps me continue creating and sharing my work with the world.'
 	};
+
+	const faqItems = [
+		{
+			title: 'How do payouts work?',
+			content:
+				'Donations are processed securely and paid out to your connected account on a regular schedule.'
+		},
+		{
+			title: 'Can I accept recurring donations?',
+			content: 'Yes, supporters can choose monthly contributions. You can manage plans anytime.'
+		},
+		{
+			title: 'What are the fees?',
+			content:
+				'We keep fees low and transparent. Processing fees may apply depending on your region.'
+		}
+	];
 
 	// Handle support button click
 	function handleSupportClick() {
@@ -30,7 +48,6 @@
 <Seo
 	title="DonationsApp - Home"
 	description="Support creators you love with one-time or monthly donations."
-	pageName="home"
 />
 
 <main class="bg-background text-foreground min-h-screen">
@@ -45,7 +62,7 @@
 	</div>
 
 	<!-- Hero Section -->
-	<section class="w-full py-8 md:py-28 lg:py-16" style="view-transition-name: hero-section">
+	<section class="w-full py-8 md:py-14 lg:py-8" style="view-transition-name: hero-section">
 		<div class="container mx-auto w-full px-4 md:px-6">
 			<div class="grid items-center gap-8 lg:grid-cols-2">
 				<div class="space-y-6 text-center lg:text-left">
@@ -135,19 +152,19 @@
 
 	<!-- Globe-->
 	<section class="container mx-auto w-full max-w-5xl py-6 md:py-5">
-		<div class="flex h-[80vh] w-full items-center justify-center">
+		<div class="flex h-auto w-full items-center justify-center md:h-[80vh]">
 			<div
-				class="bg-background relative flex h-fit w-full items-center justify-center overflow-hidden rounded-lg border px-10 pt-8 pb-40 md:pb-60 md:shadow-xl"
+				class="bg-background relative flex h-fit w-full flex-col items-center justify-center overflow-hidden rounded-lg border px-4 pt-8 pb-24 text-center md:px-10 md:pb-40 md:shadow-xl"
 			>
 				<span
-					class="pointer-events-none bg-linear-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl leading-none font-semibold whitespace-pre-wrap text-transparent select-none dark:from-slate-700 dark:to-slate-50"
+					class="from-foreground to-muted-foreground pointer-events-none bg-gradient-to-b bg-clip-text text-5xl leading-tight font-semibold whitespace-pre-wrap text-transparent md:text-8xl"
 				>
 					Donate From Anywhere
 				</span>
-				<Globe class="top-35" />
+				<Globe class="top-10 md:top-30" />
 				<div
 					class="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]"
-				/>
+				></div>
 			</div>
 		</div>
 	</section>
@@ -212,7 +229,7 @@
 		</div>
 	</section>
 	<!-- Diagram Outline -->
-	<section class="container mx-auto w-full max-w-2xl py-6 md:py-10">
+	<section class="container mx-auto w-full max-w-4xl p-6 md:py-10">
 		{#if mounted}
 			<AnimatedBeamMultipleInput />
 		{/if}
@@ -354,27 +371,20 @@
 				<h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Frequently asked questions</h2>
 				<p class="text-muted-foreground mt-3">Answers to the most common questions.</p>
 			</div>
-			<div class="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-4">
-				<div class="bg-card rounded-xl border p-5">
-					<div class="font-semibold">How do payouts work?</div>
-					<p class="text-muted-foreground mt-2 text-sm">
-						Donations are processed securely and paid out to your connected account on a regular
-						schedule.
-					</p>
-				</div>
-				<div class="bg-card rounded-xl border p-5">
-					<div class="font-semibold">Can I accept recurring donations?</div>
-					<p class="text-muted-foreground mt-2 text-sm">
-						Yes, supporters can choose monthly contributions. You can manage plans anytime.
-					</p>
-				</div>
-				<div class="bg-card rounded-xl border p-5">
-					<div class="font-semibold">What are the fees?</div>
-					<p class="text-muted-foreground mt-2 text-sm">
-						We keep fees low and transparent. Processing fees may apply depending on your region.
-					</p>
-				</div>
-			</div>
+			<Accordion.Root class="mx-auto mt-8 w-full max-w-3xl" type="single" collapsible>
+				{#each faqItems as item, index}
+					<Accordion.Item value="item-{index + 1}" class="bg-card rounded-xl border shadow-xs">
+						<Accordion.Trigger
+							class="px-5 text-left text-base font-semibold [&&>svg]:-rotate-90 [&[data-state=open]>svg]:rotate-0"
+						>
+							{item.title}
+						</Accordion.Trigger>
+						<Accordion.Content class="text-muted-foreground px-5 pb-4 text-sm">
+							{item.content}
+						</Accordion.Content>
+					</Accordion.Item>
+				{/each}
+			</Accordion.Root>
 		</div>
 	</section>
 </main>

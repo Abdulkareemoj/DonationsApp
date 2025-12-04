@@ -2,7 +2,7 @@
 	import DataTable from './data-table.svelte';
 	import { columns, type Donation } from './column';
 
-	let isLoading = true;
+	let isLoading = $state(true);
 
 	let { data } = $props();
 	const errorStr = $derived(String(data?.error ?? '').trim());

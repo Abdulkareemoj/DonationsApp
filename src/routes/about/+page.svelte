@@ -63,7 +63,6 @@
 <Seo
 	title="About — DonationsApp"
 	description="Learn about our mission to empower the creator economy."
-	pageName="about"
 />
 
 <main class="bg-background text-foreground min-h-screen">
@@ -71,13 +70,13 @@
 	<section class="relative w-full py-16 md:py-28 lg:py-32">
 		<div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
 			<div
-				class="bg-primary/20 absolute top-[-140px] left-1/2 h-[320px] w-[880px] -translate-x-1/2 rounded-full blur-3xl"
+				class="bg-primary/20 absolute top-[-140px] left-1/2 h-80 w-[880px] -translate-x-1/2 rounded-full blur-3xl"
 			></div>
 			<div
-				class="bg-muted/60 absolute right-[-200px] bottom-[-160px] h-[260px] w-[520px] rounded-full blur-3xl"
+				class="bg-muted/60 absolute right-[-200px] -bottom-40 h-[260px] w-[520px] rounded-full blur-3xl"
 			></div>
 		</div>
-		<div class="container px-4 md:px-6">
+		<div class=" px-4 md:px-6">
 			<div class="mx-auto max-w-3xl text-center">
 				<span
 					class="text-muted-foreground inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs"
