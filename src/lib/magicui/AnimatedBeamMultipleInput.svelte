@@ -34,7 +34,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
 								<Avatar.Fallback>CN</Avatar.Fallback>
 							</Avatar.Root>
@@ -49,7 +51,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/sveltejs.png" alt="@sveltejs" />
 								<Avatar.Fallback>SV</Avatar.Fallback>
 							</Avatar.Root>
@@ -64,7 +68,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/tailwindcss.png" alt="@tailwindcss" />
 								<Avatar.Fallback>TW</Avatar.Fallback>
 							</Avatar.Root>
@@ -79,7 +85,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/vercel.png" alt="@vercel" />
 								<Avatar.Fallback>VC</Avatar.Fallback>
 							</Avatar.Root>
@@ -94,7 +102,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/vitejs.png" alt="@vitejs" />
 								<Avatar.Fallback>VT</Avatar.Fallback>
 							</Avatar.Root>
@@ -111,7 +121,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/monicahq.png" alt="@monicahq" />
 								<Avatar.Fallback>MH</Avatar.Fallback>
 							</Avatar.Root>
@@ -128,7 +140,9 @@
 				<Tooltip.Provider>
 					<Tooltip.Root>
 						<Tooltip.Trigger>
-							<Avatar.Root>
+							<Avatar.Root
+								class="ring-background ring-2 transition-all duration-300 ease-in-out hover:z-1 hover:-translate-y-1 hover:shadow-md"
+							>
 								<Avatar.Image src="https://github.com/jack.png" alt="@jack" />
 								<Avatar.Fallback>J</Avatar.Fallback>
 							</Avatar.Root>

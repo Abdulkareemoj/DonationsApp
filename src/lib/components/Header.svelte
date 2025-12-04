@@ -30,7 +30,7 @@
 
 		<!-- Centered brand + nav -->
 		<div class="flex items-center gap-6">
-			<nav class="hidden items-center gap-6 text-sm md:flex">
+			<nav class="hidden items-center gap-6 text-sm font-semibold md:flex">
 				<a
 					href="/"
 					on:click={(e) => handleNavigation('/', e)}
@@ -60,7 +60,7 @@
 			<ModeToggle />
 			<Button
 				href="/donationspage"
-				on:click={(e) => handleNavigation('/donationspage', e)}
+				onclick={(e) => handleNavigation('/donationspage', e)}
 				class="bg-primary text-primary-foreground hover:bg-primary/90 hidden h-9 items-center justify-center rounded-md px-4 text-xs font-medium shadow-sm transition-colors md:inline-flex"
 			>
 				Donate<ArrowRight />
@@ -107,7 +107,7 @@
 					</nav>
 					<div class="mt-6 flex items-center gap-3">
 						<ModeToggle />
-						<Button href="/donationspage" on:click={(e) => handleNavigation('/donationspage', e)}>
+						<Button href="/donationspage" onclick={(e) => handleNavigation('/donationspage', e)}>
 							Donate <ArrowRight />
 						</Button>
 					</div>
