@@ -2,7 +2,7 @@ import { ImageResponse } from '@ethercorps/sveltekit-og';
 import type { RequestHandler } from '@sveltejs/kit';
 
 const template = `
-<div class="flex bg-[#f08564] w-full h-full items-center justify-center ">
+<div class="flex bg-[#f08564] w-full h-full items-center justify-center p-4">
     <div class="flex flex-col w-full h-full p-10">
         <div class="flex flex-col flex-grow justify-center">
             <h1 class="text-6xl font-bold  leading-tight">
