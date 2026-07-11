@@ -97,7 +97,7 @@ export const columns: ColumnDef<Donation>[] = [
 		accessorKey: 'amount',
 		header: () => {
 			const amountHeaderSnippet = createRawSnippet(() => ({
-				render: () => `<div class="text-right">amount</div>`
+				render: () => `<div class="text-right">Amount</div>`
 			}));
 			return renderSnippet(amountHeaderSnippet, '');
 		},

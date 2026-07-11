@@ -54,7 +54,7 @@
 	}
 </script>
 
-<Button onclick={initializePayment} variant="secondary" disabled={!isClient || !PaystackPop}>
+<Button onclick={initializePayment} disabled={!isClient || !PaystackPop}>
 	{text}
 </Button>
 
