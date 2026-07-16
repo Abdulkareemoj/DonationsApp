@@ -16,7 +16,6 @@
 
 	onMount(() => {
 		isClient = true;
-		// Load Paystack script
 		const script = document.createElement('script');
 		script.src = 'https://js.paystack.co/v1/inline.js';
 		script.async = true;
@@ -54,14 +53,17 @@
 	}
 </script>
 
-<Button onclick={initializePayment} disabled={!isClient || !PaystackPop}>
+<Button
+	onclick={initializePayment}
+	disabled={!isClient || !PaystackPop}
+	class="brutal-press w-full bg-primary text-ink text-body font-bold border-2 border-ink hover:bg-primary/90"
+>
 	{text}
 </Button>
 
 <svelte:head>
 	{#if isClient}
 		<script>
-			// TypeScript declaration for PaystackPop
 			interface Window {
 				PaystackPop: any;
 			}

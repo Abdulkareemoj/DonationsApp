@@ -1,120 +1,148 @@
 <script lang="ts">
 	import Seo from '$lib/components/Seo.svelte';
-	import { Separator } from '$lib/components/ui/separator';
-	import { Button } from '$lib/components/ui/button';
-	import { Code, CreditCard, LayoutDashboard, ExternalLink } from '@lucide/svelte';
+	import Kbd from '$lib/components/Kbd.svelte';
+	import { CreditCard, LayoutGrid, Code2, ExternalLink } from '@lucide/svelte';
+
+	const EMBED_SNIPPET = `<iframe
+  src="https://your-donatekit-domain.com/?embed=1"
+  title="Donate"
+  style="border:0;width:100%;max-width:640px;height:820px;"
+  loading="lazy"
+></iframe>`;
 </script>
 
 <Seo
-	title="How to Use — DonationsApp"
-	description="A simple donation page you can add to your website. Learn how it works."
+	title="About - DonationsApp"
+	description="A lightweight donation page for creators. Accept one-time or monthly contributions via Paystack."
 />
 
-<main class="bg-background text-foreground min-h-screen">
-	<section class="w-full py-12 md:py-20">
-		<div class="container mx-auto max-w-3xl px-4 md:px-6">
-			<div class="flex flex-col items-center gap-3 text-center">
-				<h1 class="text-3xl font-bold tracking-tight sm:text-4xl">What is this?</h1>
-				<p class="text-muted-foreground mx-auto max-w-xl text-base">
-					A lightweight, self-hosted donation page for creators. Accept one-time or monthly
-					contributions via Paystack, with donor records stored in Airtable.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	<div class="container mx-auto max-w-3xl px-4 md:px-6">
-		<Separator />
+<section class="w-full py-12 md:py-20">
+	<div class="mx-auto max-w-4xl px-4 md:px-6">
+		<div class="eyebrow mb-3">// what is this</div>
+		<h1
+			class="text-4xl font-black leading-[0.95] tracking-tight sm:text-6xl"
+			style="view-transition-name: page-title"
+		>
+			No signups. <br />
+			<span class="bg-primary px-2 text-primary-foreground">Just code</span> you own.
+		</h1>
+		<p class="text-body text-foreground/80 mt-6 max-w-2xl">
+			A lightweight donation page for creators. Accept one-time or monthly
+			contributions via Paystack, records saved to your Airtable base. Deploy it as its
+			own site or embed it anywhere with an iframe.
+		</p>
 	</div>
+</section>
 
-	<section class="w-full py-12 md:py-16">
-		<div class="container mx-auto max-w-3xl px-4 md:px-6">
-			<h2 class="mb-6 text-xl font-semibold tracking-tight">How it works</h2>
-			<div class="flex flex-col gap-3">
-				<div class="bg-card flex items-start gap-4 rounded-lg border p-5">
-					<div
-						class="bg-primary/10 text-primary mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-md"
-					>
-						<CreditCard />
+<section class="w-full pb-12 md:pb-20">
+	<div class="mx-auto max-w-4xl px-4 md:px-6">
+		<div class="grid gap-4 md:grid-cols-3">
+			<div class="bg-primary text-primary-foreground brutal rounded-[--radius-md] p-5">
+				<div class="flex items-center justify-between">
+					<div class="brutal-sm inline-flex size-10 items-center justify-center rounded-[--radius-sm] bg-background text-foreground">
+						<CreditCard class="size-5" strokeWidth={2.5} />
 					</div>
-					<div>
-						<h3 class="font-medium">Donation page</h3>
-						<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-							A single page with a creator profile card and a form. Supporters enter their name,
-							email, pick a preset amount or type a custom one, choose one-time or monthly, and pay
-							through Paystack's secure popup.
-						</p>
-					</div>
+					<div class="eyebrow opacity-80">01</div>
 				</div>
-				<div class="bg-card flex items-start gap-4 rounded-lg border p-5">
-					<div
-						class="bg-primary/10 text-primary mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-md"
-					>
-						<LayoutDashboard />
+				<h3 class="mt-4 text-xl font-black tracking-tight">Donate</h3>
+				<p class="text-caption mt-2 leading-relaxed opacity-90">Presets, custom amounts, one-time or monthly. Paystack handles the payment popup.</p>
+			</div>
+
+			<div class="bg-secondary text-secondary-foreground brutal rounded-[--radius-md] p-5">
+				<div class="flex items-center justify-between">
+					<div class="brutal-sm inline-flex size-10 items-center justify-center rounded-[--radius-sm] bg-background text-foreground">
+						<LayoutGrid class="size-5" strokeWidth={2.5} />
 					</div>
-					<div>
-						<h3 class="font-medium">Donations list</h3>
-						<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-							A table view of all donations pulled from Airtable. Search, sort, paginate, and manage
-							your supporter records in one place.
-						</p>
-					</div>
+					<div class="eyebrow opacity-80">02</div>
 				</div>
-				<div class="bg-card flex items-start gap-4 rounded-lg border p-5">
-					<div
-						class="bg-primary/10 text-primary mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-md"
-					>
-						<Code />
+				<h3 class="mt-4 text-xl font-black tracking-tight">Donations</h3>
+				<p class="text-caption mt-2 leading-relaxed opacity-90">A live wall of supporters pulled straight from your Airtable base.</p>
+			</div>
+
+			<div class="bg-card brutal rounded-[--radius-md] p-5">
+				<div class="flex items-center justify-between">
+					<div class="brutal-sm inline-flex size-10 items-center justify-center rounded-[--radius-sm] bg-background text-foreground">
+						<Code2 class="size-5" strokeWidth={2.5} />
 					</div>
-					<div>
-						<h3 class="font-medium">Self-hosted</h3>
-						<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-							Deploy to Vercel, Netlify, or any Node-compatible host. Your data stays in your
-							Airtable base — no third-party dashboard.
-						</p>
-					</div>
+					<div class="eyebrow opacity-80">03</div>
 				</div>
+				<h3 class="mt-4 text-xl font-black tracking-tight">Embed anywhere</h3>
+				<p class="text-caption mt-2 leading-relaxed opacity-90">Drop a single iframe on any website. Or self-host the whole thing.</p>
 			</div>
 		</div>
-	</section>
-
-	<div class="container mx-auto max-w-3xl px-4 md:px-6">
-		<Separator />
 	</div>
+</section>
 
-	<section class="w-full py-12 md:py-16">
-		<div class="container mx-auto max-w-3xl px-4 md:px-6">
-			<h2 class="mb-6 text-xl font-semibold tracking-tight">Add it to your site</h2>
-			<div class="flex flex-col gap-3">
-				<div class="rounded-lg border p-5">
-					<h3 class="font-medium">1. Clone and configure</h3>
-					<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-						Clone the repo, install dependencies, and add your Paystack public key and Airtable
-						credentials to <code
-							class="bg-muted text-foreground mx-0.5 rounded px-1.5 py-0.5 text-xs">.env</code
-						>.
-					</p>
-				</div>
-				<div class="rounded-lg border p-5">
-					<h3 class="font-medium">2. Customise the creator profile</h3>
-					<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-						Edit the placeholder name, bio, avatar, and social links in the donation form component
-						to match your brand.
-					</p>
-				</div>
-				<div class="rounded-lg border p-5">
-					<h3 class="font-medium">3. Deploy</h3>
-					<p class="text-muted-foreground mt-1 text-sm leading-relaxed">
-						Push to GitHub and deploy. The Vercel adapter is pre-configured — just connect your repo
-						and done.
-					</p>
-				</div>
-			</div>
-			<div class="mt-8">
-				<Button href="/donationspage">
-					Try it now <ExternalLink data-icon="inline-end" />
-				</Button>
-			</div>
+<section class="w-full pb-12 md:pb-20">
+	<div class="mx-auto max-w-4xl px-4 md:px-6">
+		<div class="eyebrow mb-3">// embed snippet</div>
+		<h2 class="text-2xl font-black tracking-tight sm:text-3xl">
+			One tag. Drop it in.
+		</h2>
+		<p class="text-caption text-foreground/80 mt-2 max-w-xl">
+			Append <code class="font-mono font-bold">?embed=1</code> to strip the page chrome.
+		</p>
+		<div class="brutal mt-6 overflow-x-auto rounded-[--radius-md] bg-ink p-5">
+			<pre class="text-xs leading-relaxed text-primary"><code>{EMBED_SNIPPET}</code></pre>
 		</div>
-	</section>
-</main>
+	</div>
+</section>
+
+<section class="w-full pb-16 md:pb-24">
+	<div class="mx-auto max-w-4xl px-4 md:px-6">
+		<div class="eyebrow mb-3">// setup</div>
+		<h2 class="text-2xl font-black tracking-tight sm:text-3xl">Three env vars.</h2>
+		<ol class="mt-6 space-y-3">
+			<li class="brutal-sm flex items-start gap-4 rounded-[--radius-sm] bg-card p-4">
+				<div class="brutal-sm flex size-10 shrink-0 items-center justify-center rounded-[--radius-sm] bg-primary text-caption font-black text-primary-foreground">01</div>
+				<div>
+					<div class="font-black">Create an Airtable base</div>
+					<div class="text-caption text-foreground/80 mt-1">
+						Add a table (default <code class="font-mono font-bold">Donations</code>)
+						with fields: <Kbd>Name</Kbd> <Kbd>Email</Kbd> <Kbd>Amount</Kbd>
+						<Kbd>Frequency</Kbd> <Kbd>Message</Kbd> <Kbd>Reference</Kbd> <Kbd>Date</Kbd>.
+					</div>
+				</div>
+			</li>
+			<li class="brutal-sm flex items-start gap-4 rounded-[--radius-sm] bg-card p-4">
+				<div class="brutal-sm flex size-10 shrink-0 items-center justify-center rounded-[--radius-sm] bg-primary text-caption font-black text-primary-foreground">02</div>
+				<div>
+					<div class="font-black">Set env vars</div>
+					<div class="text-caption text-foreground/80 mt-1">
+						<Kbd>AIRTABLE_API_KEY</Kbd> <Kbd>AIRTABLE_BASE_ID</Kbd>
+						<Kbd>AIRTABLE_TABLE_NAME</Kbd> (optional)
+						<Kbd>VITE_PAYSTACK_PUBLIC_KEY</Kbd>.
+					</div>
+				</div>
+			</li>
+			<li class="brutal-sm flex items-start gap-4 rounded-[--radius-sm] bg-card p-4">
+				<div class="brutal-sm flex size-10 shrink-0 items-center justify-center rounded-[--radius-sm] bg-primary text-caption font-black text-primary-foreground">03</div>
+				<div>
+					<div class="font-black">Brand it (optional)</div>
+					<div class="text-caption text-foreground/80 mt-1">
+						<Kbd>VITE_CREATOR_NAME</Kbd> <Kbd>VITE_CREATOR_TAGLINE</Kbd>.
+					</div>
+				</div>
+			</li>
+		</ol>
+
+		<div class="mt-8 flex flex-wrap gap-3">
+			<a
+				href="https://paystack.com"
+				target="_blank"
+				rel="noreferrer"
+				class="brutal-sm brutal-press inline-flex items-center gap-1.5 rounded-[--radius-sm] bg-card px-4 py-2 text-caption font-black uppercase tracking-wide"
+			>
+				Paystack <ExternalLink class="size-3.5" strokeWidth={3} />
+			</a>
+			<a
+				href="https://airtable.com"
+				target="_blank"
+				rel="noreferrer"
+				class="brutal-sm brutal-press inline-flex items-center gap-1.5 rounded-[--radius-sm] bg-card px-4 py-2 text-caption font-black uppercase tracking-wide"
+			>
+				Airtable <ExternalLink class="size-3.5" strokeWidth={3} />
+			</a>
+		</div>
+	</div>
+</section>
