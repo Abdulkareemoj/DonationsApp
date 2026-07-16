@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { cn } from "$lib/utils";
-	import Portal from "$lib/components/Portal.svelte";
+	import Portal from "$lib/components/portal.svelte";
 	import PortalBackdrop from "$lib/components/portal-backdrop.svelte";
 	import { Button, buttonVariants } from "$lib/components/ui/button";
 	import {Menu, X} from "@lucide/svelte";
 	let { navLinks }: { navLinks: { label: string; href: string }[] } = $props();
 	let open = $state(false);
+	import ModeToggle from "./modeToggle.svelte";
 </script>
 
 <div class="md:hidden">
@@ -39,10 +40,7 @@
 						</a>
 					{/each}
 				</div>
-				<div class="mt-12 flex flex-col gap-2">
-					<Button class="w-full" variant="outline">Sign In</Button>
-					<Button class="w-full">Get Started</Button>
-				</div>
+				<ModeToggle/>
 			</div>
 		</Portal>
 	{/if}
