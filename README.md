@@ -1,92 +1,164 @@
-# 📖 Donations-App
+# DonationsApp
 
-**Donation App** is a self-hosted platform for accepting donations, similar to Ko-fi, Buy Me a Coffee, or Patreon.
+A lightweight, self-hosted donation page for creators. Accept one-time or monthly contributions via Paystack, with donor records stored in Airtable. Deploy as a standalone site or embed anywhere with a single iframe.
 
-- [📖 Donations-App](#-donations-app)
-  - [🛠 Built With](#-built-with)
-    - [Key Features](#key-features)
-  - [🚀 Live Demo](#-live-demo)
-  - [💻 Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Setup](#setup)
-    - [Install](#install)
-    - [Usage](#usage)
-  - [Deploy on Vercel](#deploy-on-vercel)
-  - [🔭 Future Features](#-future-features)
-  - [🤝 Contributing](#-contributing)
-  - [📝 License](#-license)
+## Tech Stack
 
-## 🛠 Built With
+- **Framework:** SvelteKit 2 + Svelte 5 (runes)
+- **Styling:** TailwindCSS v4 + shadcn-svelte
+- **Payments:** Paystack (NGN, GHS, ZAR, USD, KES)
+- **Database:** Airtable
+- **Forms:** Superforms + Zod
+- **Deployment:** Vercel (adapters for Cloudflare, Netlify available)
 
-- [Sveltekit](https://svelte.dev/)
-- [TailwindCSS](https://tailwindcss.com/)
-- [shadcn](https://shadcn.ui)
-- [Paystack](https://developers.paystack.co/docs/)
-- [Superforms](https://superforms.com/)
-- [Zod](https://zod.com)
-- [Airtable](https://airtable.com)
+## Features
 
-### Key Features
+- Preset and custom donation amounts
+- One-time and monthly donation options
+- Paystack secure payment popup
+- Donor wall with real-time Airtable data
+- Embeddable via iframe (`?embed=1`)
+- Creator profile card with social links
+- Fundraising goal tracker
+- PDF receipt generation
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-
-## 🚀 Live Demo
-
-Not Deployed Yet.
-
-## 💻 Getting Started
-
-To get a local copy up and running, follow these steps.
+## Getting Started
 
 ### Prerequisites
 
-- Familiarity with command-line navigation.
-- Knowledge of Git
-- A code editor.
-- Paystack API keys.
+- [Node.js](https://nodejs.org/) 18+
+- [pnpm](https://pnpm.io/)
+- [Paystack](https://paystack.com) API keys (test or live)
+- [Airtable](https://airtable.com) account with a base
 
-### Setup
-
-Clone the repository:
-
-```sh
-git clone <repository_url>
-```
-
-### Install
-
-Install dependencies:
+### 1. Clone and install
 
 ```bash
+git clone <repository-url>
+cd DonationsApp-v2
 pnpm install
 ```
 
-### Usage
+### 2. Set up environment variables
 
-Run the development server:
+Copy `.env.example` to `.env` and fill in your keys:
 
 ```bash
-pnpm run dev
+cp .env.example .env
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Required:
 
-## Deploy on Vercel
+```env
+# Paystack
+VITE_PAYSTACK_PUBLIC_KEY=pk_test_xxxxx
+PAYSTACK_SECRET_KEY=sk_test_xxxxx
 
-The easiest way to deploy is using the [Vercel ](https://vercel.com/) but [Cloudflare Pages](https://cloudflare.com) and [Netlify](https://netlify.com) also works
+# Airtable
+AIRTABLE_API_KEY=xxxxx
+AIRTABLE_BASE_ID=xxxxx
+AIRTABLE_TABLE_NAME=Donations
+```
 
-Refer to the [Svelte deployment documentation](https://svelte.dev/docs/kit/adapters) for details.
+Optional (branding):
 
-## 🔭 Future Features
+```env
+VITE_CREATOR_NAME="Your Name"
+VITE_CREATOR_TAGLINE="Building cool things"
+VITE_CREATOR_BIO="Independent maker shipping tools."
+VITE_CREATOR_TWITTER="https://twitter.com/you"
+VITE_CREATOR_GITHUB="https://github.com/you"
+VITE_CREATOR_WEBSITE="https://yoursite.com"
+VITE_GOAL_AMOUNT=100000
+VITE_GOAL_LABEL="Support the creator"
+```
 
-Suggest features by creating an issue
+### 3. Run development server
 
-## 🤝 Contributing
+```bash
+pnpm dev
+```
 
-Contributions, issues, and feature requests are welcome! Give this project a ⭐ if you like it.
+Open [http://localhost:5173/donationspage](http://localhost:5173/donationspage).
 
-## 📝 License
+## Airtable Setup
 
-This project is MIT licensed.
+Create a table named `Donations` (or set `AIRTABLE_TABLE_NAME`) with these fields:
+
+| Field       | Type   |
+| ----------- | ------ |
+| Name        | Text   |
+| Email       | Email  |
+| Amount      | Number |
+| Frequency   | Select |
+| Message     | Text   |
+| Reference   | Text   |
+| Date        | Date   |
+| Status      | Select |
+
+## Pages
+
+| Route            | Description                          |
+| ---------------- | ------------------------------------ |
+| `/donationspage` | Main donation form with creator card |
+| `/donationslist` | Wall of supporters with stats        |
+| `/about`         | How it works, embed snippet, setup   |
+
+## Embedding
+
+Append `?embed=1` to any page URL to strip the header and show just the content:
+
+```html
+<iframe
+  src="https://your-domain.vercel.app/donationspage?embed=1"
+  title="Donate"
+  style="border:0;width:100%;max-width:640px;height:820px;"
+  loading="lazy"
+></iframe>
+```
+
+## Deploy
+
+### Vercel (recommended)
+
+```bash
+pnpm build
+```
+
+Or push to GitHub and connect the repo to [Vercel](https://vercel.com). The `@sveltejs/adapter-vercel` is pre-configured.
+
+### Other platforms
+
+The project includes adapters for Cloudflare and Netlify. See the [SvelteKit deployment docs](https://svelte.dev/docs/kit/adapters) for details.
+
+## Project Structure
+
+```
+src/
+  routes/
+    donationspage/        # Main donation page
+      +page.svelte        # Page layout
+      +page.server.ts     # Server-side data + form handling
+      donation-form.svelte # Donation form component
+      schema.ts           # Zod validation schema
+    donationslist/        # Donor wall
+      +page.svelte
+      +page.server.ts
+    about/                # About/setup page
+      +page.svelte
+  lib/
+    components/
+      ui/                 # shadcn-svelte components
+     ...other-components.svelte
+    utils/
+      receipt.ts          # PDF receipt generation
+  app.css                 # Design system tokens
+```
+
+## Contributing
+
+Contributions are welcome. Open an issue or submit a pull request.
+
+## License
+
+MIT
