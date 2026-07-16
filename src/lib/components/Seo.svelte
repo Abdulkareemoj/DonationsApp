@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 
 	let {
-		title = 'DonationsApp  Support creators you love',
+		title = 'Support creators you love',
 		description = 'A simple way to support your favorite creators with one-time or monthly donations.',
 		type = 'website',
 		siteName = 'DonationsApp'

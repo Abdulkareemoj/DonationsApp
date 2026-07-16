@@ -6,7 +6,7 @@
 	import Seo from '$lib/components/Seo.svelte';
 	import { onMount } from 'svelte';
 	import { DollarSign, Users, Clock, MessageSquare, Heart } from '@lucide/svelte';
-	import type { Donation } from '$lib/types';
+	import type { Donation } from '../donationspage/+page.server.js';
 
 	let isLoading = $state(true);
 
@@ -71,116 +71,125 @@
 	<section class="w-full py-12 md:py-16">
 		<div class=" px-4 md:px-6">
 			<div class="mx-auto max-w-5xl">
-			<div class="mb-12 text-center">
-				<span class="eyebrow">Wall of love</span>
-				<h1
-					class="text-display text-ink mt-2"
-					style="view-transition-name: page-title"
-				>
-					Donations
-				</h1>
-				<p class="text-body text-muted-foreground mx-auto mt-3 max-w-md">
-					Every naira counts. Here's who's been supporting the mission.
-				</p>
-			</div>
-
-			{#if errorStr.length > 0}
-				<Alert.Root variant="destructive" class="brutal-sm">
-					<Alert.Title class="text-label">We couldn't load donations.</Alert.Title>
-					<Alert.Description class="text-caption">{errorStr}</Alert.Description>
-				</Alert.Root>
-			{:else if donationsList.length === 0}
-				<Empty.Root class="brutal border-2 border-dashed  border-ink/30">
-					<Empty.Header>
-						<Empty.Media variant="icon">
-							<Heart class="size-6" />
-						</Empty.Media>
-						<Empty.Title class="text-label">No donations yet</Empty.Title>
-						<Empty.Description class="text-caption">
-							Donations will appear here once they arrive.
-						</Empty.Description>
-					</Empty.Header>
-					<Empty.Content>
-						<Button href="/donationspage" variant="outline" class="brutal-sm">
-							Go to Donate Page
-						</Button>
-					</Empty.Content>
-				</Empty.Root>
-			{:else}
-				<div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-					<div class="bg-card brutal p-4">
-						<div class="flex items-center gap-3">
-							<div class="bg-primary/20 inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20">
-								<DollarSign class="size-5 text-ink" />
-							</div>
-							<div>
-								<p class="text-caption text-muted-foreground">Total raised</p>
-								<p class="text-h2 text-ink">₦{totalRaised.toLocaleString()}</p>
-							</div>
-						</div>
-					</div>
-					<div class="bg-card brutal p-4">
-						<div class="flex items-center gap-3">
-							<div class="bg-secondary/10 inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20">
-								<Users class="size-5 text-secondary" />
-							</div>
-							<div>
-								<p class="text-caption text-muted-foreground">Supporters</p>
-								<p class="text-h2 text-ink">{supporterCount}</p>
-							</div>
-						</div>
-					</div>
-					<div class="bg-card brutal p-4">
-						<div class="flex items-center gap-3">
-							<div class="bg-accent inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20">
-								<Clock class="size-5 text-ink" />
-							</div>
-							<div>
-								<p class="text-caption text-muted-foreground">Latest donation</p>
-								<p class="text-body font-bold text-ink">
-									{latestDonation ? timeAgo(latestDonation.date) : 'N/A'}
-								</p>
-							</div>
-						</div>
-					</div>
+				<div class="mb-12 text-center">
+					<span class="eyebrow">Wall of love</span>
+					<h1 class="text-display text-ink mt-2" style="view-transition-name: page-title">
+						Donations
+					</h1>
+					<p class="text-body text-muted-foreground mx-auto mt-3 max-w-md">
+						Every naira counts. Here's who's been supporting the mission.
+					</p>
 				</div>
 
-				<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					{#each donationsList as donation, i}
-						<div class="brutal {cardBg[i % 3]} p-4">
-							<div class="mb-3 flex items-center justify-between">
-								<div class="bg-primary text-ink flex size-9 items-center justify-center rounded-md border-2 border-ink font-bold text-caption">
-									{donation.name
-										.split(' ')
-										.map((n) => n[0])
-										.join('')
-										.toUpperCase()
-										.slice(0, 2)}
+				{#if errorStr.length > 0}
+					<Alert.Root variant="destructive" class="brutal-sm">
+						<Alert.Title class="text-label">We couldn't load donations.</Alert.Title>
+						<Alert.Description class="text-caption">{errorStr}</Alert.Description>
+					</Alert.Root>
+				{:else if donationsList.length === 0}
+					<Empty.Root class="brutal border-2 border-dashed  border-ink/30">
+						<Empty.Header>
+							<Empty.Media variant="icon">
+								<Heart class="size-6" />
+							</Empty.Media>
+							<Empty.Title class="text-label">No donations yet</Empty.Title>
+							<Empty.Description class="text-caption">
+								Donations will appear here once they arrive.
+							</Empty.Description>
+						</Empty.Header>
+						<Empty.Content>
+							<Button href="/donationspage" variant="outline" class="brutal-sm">
+								Go to Donate Page
+							</Button>
+						</Empty.Content>
+					</Empty.Root>
+				{:else}
+					<div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+						<div class="bg-card brutal p-4">
+							<div class="flex items-center gap-3">
+								<div
+									class="bg-primary/20 inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20"
+								>
+									<DollarSign class="size-5 text-ink" />
 								</div>
-								<span class="text-h3 text-ink">₦{donation.amount.toLocaleString()}</span>
+								<div>
+									<p class="text-caption text-muted-foreground">Total raised</p>
+									<p class="text-h2 text-ink">₦{totalRaised.toLocaleString()}</p>
+								</div>
 							</div>
-
-							<h3 class="text-label text-ink">{donation.name || 'Anonymous'}</h3>
-
-							{#if donation.message}
-								<div class="bg-card border-2 border-ink/10 mt-3 flex items-start gap-2 rounded p-2">
-									<MessageSquare class="mt-0.5 size-3 shrink-0 text-muted-foreground" />
-									<p class="text-caption text-muted-foreground">{donation.message}</p>
+						</div>
+						<div class="bg-card brutal p-4">
+							<div class="flex items-center gap-3">
+								<div
+									class="bg-secondary/10 inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20"
+								>
+									<Users class="size-5 text-secondary" />
 								</div>
-							{/if}
+								<div>
+									<p class="text-caption text-muted-foreground">Supporters</p>
+									<p class="text-h2 text-ink">{supporterCount}</p>
+								</div>
+							</div>
+						</div>
+						<div class="bg-card brutal p-4">
+							<div class="flex items-center gap-3">
+								<div
+									class="bg-accent inline-flex size-10 items-center justify-center rounded-md border-2 border-ink/20"
+								>
+									<Clock class="size-5 text-ink" />
+								</div>
+								<div>
+									<p class="text-caption text-muted-foreground">Latest donation</p>
+									<p class="text-body font-bold text-ink">
+										{latestDonation ? timeAgo(latestDonation.date) : 'N/A'}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
 
-							<div class="border-ink/10 mt-3 flex items-center justify-between border-t-2 pt-2">
-								<span class="text-caption text-muted-foreground">{timeAgo(donation.date)}</span>
-								{#if donation.status}
-									<span class="bg-accent text-ink inline-flex items-center rounded border-2 border-ink/20 px-1.5 py-0.5 text-caption font-medium">
-										{donation.status}
-									</span>
+					<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+						{#each donationsList as donation, i}
+							<div class="brutal {cardBg[i % 3]} p-4">
+								<div class="mb-3 flex items-center justify-between">
+									<div
+										class="bg-primary text-ink flex size-9 items-center justify-center rounded-md border-2 border-ink font-bold text-caption"
+									>
+										{donation.name
+											.split(' ')
+											.map((n) => n[0])
+											.join('')
+											.toUpperCase()
+											.slice(0, 2)}
+									</div>
+									<span class="text-h3 text-ink">₦{donation.amount.toLocaleString()}</span>
+								</div>
+
+								<h3 class="text-label text-ink">{donation.name || 'Anonymous'}</h3>
+
+								{#if donation.message}
+									<div
+										class="bg-card border-2 border-ink/10 mt-3 flex items-start gap-2 rounded p-2"
+									>
+										<MessageSquare class="mt-0.5 size-3 shrink-0 text-muted-foreground" />
+										<p class="text-caption text-muted-foreground">{donation.message}</p>
+									</div>
 								{/if}
+
+								<div class="border-ink/10 mt-3 flex items-center justify-between border-t-2 pt-2">
+									<span class="text-caption text-muted-foreground">{timeAgo(donation.date)}</span>
+									{#if donation.status}
+										<span
+											class="bg-accent text-ink inline-flex items-center rounded border-2 border-ink/20 px-1.5 py-0.5 text-caption font-medium"
+										>
+											{donation.status}
+										</span>
+									{/if}
+								</div>
 							</div>
-						</div>
-					{/each}
-				</div>
-			{/if}
+						{/each}
+					</div>
+				{/if}
 			</div>
 		</div>
 	</section>

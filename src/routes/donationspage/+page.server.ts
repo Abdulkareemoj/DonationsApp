@@ -5,7 +5,17 @@ import { donationSchema } from './schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { AIRTABLE_TOKEN, AIRTABLE_TOKEN_ID } from '$env/static/private';
 import Airtable from 'airtable';
-import type { Donation } from '$lib/types';
+
+export type Donation = {
+	id: string;
+	name: string;
+	status: string;
+	amount: number;
+	quantity: number;
+	date: string;
+	imageUrl: string;
+	message?: string;
+};
 
 async function fetchDonations(): Promise<Donation[]> {
 	if (!AIRTABLE_TOKEN || !AIRTABLE_TOKEN_ID) {
