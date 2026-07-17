@@ -1,33 +1,34 @@
+class ScrollState {
+	#scrolled = $state(false);
 
-  // * Svelte 5 rune-based port of the React useScroll hook.
-  // * `.svelte.ts` files can use runes ($state, $effect) outside of components.
+	readonly #downThreshold: number;
+	readonly #upThreshold: number;
 
-export function useScroll(downThreshold: number, upThreshold?: number) {
-	let scrolled = $state(false);
-	const scrollUpThreshold = upThreshold ?? downThreshold / 2;
+	constructor(downThreshold: number, upThreshold?: number) {
+		this.#downThreshold = downThreshold;
+		this.#upThreshold = upThreshold ?? downThreshold / 2;
 
-	$effect(() => {
-		const handleScroll = () => {
-			const y = window.scrollY;
-			// Hysteresis: different thresholds for up/down to prevent flickering
-			if (scrolled) {
-				// Currently scrolled - only unscroll when below lower threshold
-				scrolled = y > scrollUpThreshold;
-			} else {
-				// Currently not scrolled - only scroll when above higher threshold
-				scrolled = y > downThreshold;
-			}
-		};
+		$effect(() => {
+			const handleScroll = () => {
+				const y = window.scrollY;
+				// Hysteresis Logic: Only update scrolled state when crossing thresholds in the appropriate direction
+				this.#scrolled = this.#scrolled
+					? y > this.#upThreshold // currently scrolled → only reset below upThreshold
+					: y > this.#downThreshold; // currently not scrolled → only set above downThreshold
+			};
 
-		window.addEventListener("scroll", handleScroll, { passive: true });
-		handleScroll();
+			window.addEventListener("scroll", handleScroll, { passive: true });
+			handleScroll();
 
-		return () => window.removeEventListener("scroll", handleScroll);
-	});
+			return () => window.removeEventListener("scroll", handleScroll);
+		});
+	}
 
-	return {
-		get scrolled() {
-			return scrolled;
-		}
-	};
+	get scrolled(): boolean {
+		return this.#scrolled;
+	}
+}
+
+export function createScroll(downThreshold: number, upThreshold?: number): ScrollState {
+	return new ScrollState(downThreshold, upThreshold);
 }
