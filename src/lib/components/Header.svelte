@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { Button } from "$lib/components/ui/button";
 	import { createScroll } from "$lib/hooks/useScroll.svelte";
-	import Logo from "$lib/components/logo.svelte";
+	import Logo from "$lib/components/Logo.svelte";
 
 	import { Portal, PortalBackdrop } from "$lib/components/ui/portal";
 	import { cn } from "$lib/utils";
