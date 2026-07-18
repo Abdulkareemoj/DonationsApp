@@ -1,35 +1,47 @@
 import { ImageResponse } from '@ethercorps/sveltekit-og';
+import { GoogleFont, resolveFonts } from '@ethercorps/sveltekit-og/fonts';
 import type { RequestHandler } from '@sveltejs/kit';
+import OGCard from '$lib/components/og-card.svelte';
 
-const template = `
-<div class="flex bg-[#f08564] w-full h-full items-center justify-center p-4">
-    <div class="flex flex-col w-full h-full p-10">
-        <div class="flex flex-col flex-grow justify-center">
-            <h1 class="text-6xl font-bold  leading-tight">
-                Support Creators You Love
-            </h1>
-            <p class="text-3xl text-gray-300 mt-4">
-                Simple, secure donations for the creator economy.
-            </p>
-        </div>
-        <div class="flex justify-between items-end text-2xl">
-            <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-400 mr-3">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
-                    <path d="M2 17l10 5 10-5"></path>
-                    <path d="M2 12l10 5 10-5"></path>
-                </svg>
-                <span class="font-bold text-white">DonationsApp</span>
-            </div>
-            <div class="text-gray-400">Simple • Secure • Creator-focused</div>
-        </div>
-    </div>
-</div>`;
+const PAGES: Record<string, { title: string; description: string }> = {
+	donationspage: {
+		title: 'Buy me a coffee.\nFund the next drop.',
+		description: 'Support a creator with a one-time or monthly donation via Paystack.'
+	},
+	donationslist: {
+		title: 'Wall of love.\nEvery naira counts.',
+		description: 'See who has been supporting the mission.'
+	},
+	about: {
+		title: 'No signups.\nJust code you own.',
+		description: 'A lightweight donation page for creators. Accept contributions via Paystack, stored in Airtable.'
+	}
+};
 
-export const GET: RequestHandler = async () => {
-	return new ImageResponse(template, {
-		height: 400,
-		width: 800,
-		debug: false
-	});
+export const GET: RequestHandler = async ({ url }) => {
+	const page = url.searchParams.get('page') ?? 'default';
+	const config = PAGES[page] ?? {
+		title: 'DonationsApp',
+		description: 'A lightweight donation page for creators.'
+	};
+
+	const fonts = await resolveFonts([
+		new GoogleFont('Inter', { weight: 400, name: 'Inter' }),
+		new GoogleFont('Inter', { weight: 700 }),
+		new GoogleFont('Inter', { weight: 900 })
+	]);
+
+	return new ImageResponse(
+		OGCard,
+		{
+			width: 1200,
+			height: 630,
+			fonts
+		},
+		{
+			title: config.title,
+			description: config.description,
+			page
+		}
+	);
 };

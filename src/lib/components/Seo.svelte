@@ -8,8 +8,14 @@
 		siteName = 'DonationsApp'
 	} = $props();
 
-	// Always use the /og endpoint for the image
-	let ogImageUrl = $derived(`${page.url.origin}/og`);
+	const ogPage = $derived(
+		page.url.pathname.includes('/donationspage') ? 'donationspage' :
+		page.url.pathname.includes('/donationslist') ? 'donationslist' :
+		page.url.pathname.includes('/about') ? 'about' :
+		'default'
+	);
+
+	let ogImageUrl = $derived(`${page.url.origin}/og?page=${ogPage}`);
 	let currentUrl = $derived(page.url.href);
 </script>
 
