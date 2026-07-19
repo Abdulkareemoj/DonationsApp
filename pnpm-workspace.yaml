@@ -1,6 +1,4 @@
 allowBuilds:
   core-js: true
   esbuild: true
-minimumReleaseAgeExclude:
-  - '@ethercorps/sveltekit-og@4.3.0'
-  - eslint@10.7.0
+  sharp: true
