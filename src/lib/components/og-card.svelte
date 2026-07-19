@@ -50,7 +50,7 @@
 					<div style="display:flex;font-size:28px;font-weight:900;color:{accent};font-family:'Inter',sans-serif">D</div>
 				</div>
 				<div style="display:flex;font-size:18px;font-weight:900;color:#1c293c;letter-spacing:-0.02em;font-family:'Inter',sans-serif">DonationsApp</div>
-				<div style="display:flex;font-size:12px;font-weight:600;color:#1c293c;opacity:0.5;margin-top:4px;font-family:'Inter',sans-serif">with Paystack</div>
+				<div style="display:flex;font-size:12px;font-weight:600;color:#1c293c;opacity:0.5;margin-top:4px;font-family:'Inter',sans-serif">For Creators</div>
 				<div style="display:flex;margin-top:16px;border:3px solid #1c293c;border-radius:4px;background-color:#fbfbf9;padding:8px 14px;box-shadow:3px 3px 0 #1c293c">
 					<div style="display:flex;font-size:11px;font-weight:700;color:#1c293c;letter-spacing:0.04em;text-transform:uppercase;font-family:'Inter',sans-serif">open source</div>
 				</div>

@@ -19,26 +19,8 @@
 <Header />
 
 <svelte:head>
-	<title>DonationsApp - Simple creator donations</title>
-	<meta
-		name="description"
-		content="A lightweight, self-hosted donation page for creators. Accept one-time or monthly contributions via Paystack."
-	/>
 	<meta property="og:site_name" content="DonationsApp" />
-	<meta property="og:title" content="DonationsApp  Simple creator donations" />
-	<meta
-		property="og:description"
-		content="A lightweight, self-hosted donation page for creators. Accept one-time or monthly contributions via Paystack."
-	/>
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content="/favicon.png" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="DonationsApp  Simple creator donations" />
-	<meta
-		name="twitter:description"
-		content="A lightweight, self-hosted donation page for creators. Accept one-time or monthly contributions via Paystack."
-	/>
-	<meta name="twitter:image" content="/favicon.png" />
 </svelte:head>
 
 {#if isNavigating}
