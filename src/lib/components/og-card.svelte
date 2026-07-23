@@ -22,6 +22,7 @@
 			<div style="display:flex;align-self:flex-start;background-color:{accent};color:#1c293c;border:3px solid #1c293c;border-radius:4px;padding:6px 16px;font-size:13px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:28px;box-shadow:3px 3px 0 #1c293c;font-family:'Inter',sans-serif">
 				{label}
 			</div>
+			div
 			<div style="display:flex;flex-direction:column;margin-bottom:20px">
 				{#each titleLines as line}
 					<div style="display:flex;font-size:56px;font-weight:900;color:#1c293c;line-height:1.05;letter-spacing:-0.04em;font-family:'Inter',sans-serif">{line}</div>

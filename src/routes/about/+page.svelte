@@ -91,14 +91,14 @@
 <section class="w-full pb-16 md:pb-24">
 	<div class="mx-auto max-w-4xl px-4 md:px-6">
 		<div class="eyebrow mb-3">// setup</div>
-		<h2 class="text-2xl font-black tracking-tight sm:text-3xl">Three env vars.</h2>
+		<h2 class="text-2xl font-black tracking-tight sm:text-3xl">Four env vars.</h2>
 		<ol class="mt-6 space-y-3">
 			<li class="brutal-sm flex items-start gap-4 rounded-[--radius-sm] bg-card p-4">
 				<div class="brutal-sm flex size-10 shrink-0 items-center justify-center rounded-[--radius-sm] bg-primary text-caption font-black text-primary-foreground">01</div>
 				<div>
 					<div class="font-black">Create an Airtable base</div>
 					<div class="text-caption text-foreground/80 mt-1">
-						Add a table (default <code class="font-mono font-bold">Donations</code>)
+						Add a table (default <code class="font-mono font-bold">Donors</code>)
 						with fields: <Kbd>Name</Kbd> <Kbd>Email</Kbd> <Kbd>Amount</Kbd>
 						<Kbd>Frequency</Kbd> <Kbd>Message</Kbd> <Kbd>Reference</Kbd> <Kbd>Date</Kbd>.
 					</div>
@@ -109,9 +109,8 @@
 				<div>
 					<div class="font-black">Set env vars</div>
 					<div class="text-caption text-foreground/80 mt-1">
-						<Kbd>AIRTABLE_API_KEY</Kbd> <Kbd>AIRTABLE_BASE_ID</Kbd>
-						<Kbd>AIRTABLE_TABLE_NAME</Kbd> (optional)
-						<Kbd>VITE_PAYSTACK_PUBLIC_KEY</Kbd>.
+						<Kbd>PAYSTACK_SECRET_KEY</Kbd> <Kbd>AIRTABLE_TOKEN</Kbd>
+						<Kbd>AIRTABLE_BASE_ID</Kbd> <Kbd>AIRTABLE_TABLE_NAME</Kbd> (optional).
 					</div>
 				</div>
 			</li>

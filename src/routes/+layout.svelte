@@ -5,10 +5,12 @@
 	import { onMount } from 'svelte';
 	import { setupViewTransitions } from '$lib/transitions';
 	import { navigating } from '$app/state';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 
 	const isNavigating = $derived(navigating !== null && navigating !== undefined);
+	const isEmbedded = $derived(page.url.searchParams.get('embed') === '1');
 
 	onMount(() => {
 		setupViewTransitions();
@@ -16,7 +18,9 @@
 </script>
 
 <ModeWatcher />
-<Header />
+{#if !isEmbedded}
+	<Header />
+{/if}
 
 <svelte:head>
 	<meta property="og:site_name" content="DonationsApp" />

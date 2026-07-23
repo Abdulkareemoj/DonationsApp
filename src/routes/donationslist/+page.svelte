@@ -6,7 +6,7 @@
 	import Seo from '$lib/components/Seo.svelte';
 	import { onMount } from 'svelte';
 	import { DollarSign, Users, Clock, MessageSquare, Heart } from '@lucide/svelte';
-	import type { Donation } from '../donationspage/+page.server.js';
+	import type { Donation } from '$lib/types';
 
 	let isLoading = $state(true);
 
