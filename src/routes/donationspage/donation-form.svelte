@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { donationSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import * as Field from '$lib/components/ui/field';
 	import * as InputGroup from '$lib/components/ui/input-group';
@@ -8,7 +6,6 @@
 	import { Coffee } from '@lucide/svelte';
 	import PaystackButton from './paystackButton.svelte';
 	import ThankYouDialog from '$lib/components/ThankYouDialog.svelte';
-	import { PUBLIC_PAYSTACK_PUBLIC_KEY } from '$env/static/public';
 	import type { ReceiptData } from '$lib/utils/receipt';
 	import { onMount } from 'svelte';
 
@@ -17,50 +14,46 @@
 
 	export let data;
 
-	const form = superForm(data.form, {
-		validators: zodClient(donationSchema),
-		resetForm: false,
-		onUpdate: ({ form }) => {
-			console.log('Form updated:', form);
-		},
-		onSubmit: async ({ formData, cancel }) => {
-			const amount = formData.get('amount');
-			const preset = formData.get('selectedPreset');
-			if (!amount && preset) {
-				formData.set('amount', String(preset));
-			} else if (!amount && !preset) {
-				quantityError = 'Please select or enter a donation amount';
-				cancel();
-				return;
-			}
-		}
-	});
-	const { form: formData, enhance, errors, submitting } = form;
+	const form = superForm(data.form, { resetForm: false });
+	const { form: formData, errors } = form;
 
 	let isCustomAmount = false;
 	let quantityError: string | null = null;
 	let showThankYou = false;
 	let receiptData: ReceiptData | null = null;
+	let paymentError = '';
 
-	onMount(() => {
-		function handlePaymentSuccess(e: CustomEvent) {
+	onMount(async () => {
+		const reference = new URLSearchParams(window.location.search).get('reference');
+		if (!reference) return;
+
+		window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+		try {
+			const response = await fetch('/api/payments/verify', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ reference })
+			});
+			const result = await response.json();
+			if (!response.ok || !result.donation) throw new Error(result.message || 'Payment verification failed.');
+
 			receiptData = {
 				creatorName: import.meta.env.VITE_CREATOR_NAME || 'Creator',
-				donorName: $formData.name,
+				donorName: result.donation.name,
 				email: $formData.donationEmail,
-				amount: Number($formData.amount),
-				reference: e.detail.reference,
-				date: new Date().toISOString(),
-				donationType: $formData.selectedDonation || 'one-time'
+				amount: result.donation.amount,
+				reference: result.donation.reference,
+				date: result.donation.date,
+				donationType: 'one-time'
 			};
 			showThankYou = true;
+		} catch (error) {
+			paymentError = error instanceof Error ? error.message : 'Payment verification failed.';
 		}
-
-		document.addEventListener('payment:success', handlePaymentSuccess as EventListener);
-		return () => document.removeEventListener('payment:success', handlePaymentSuccess as EventListener);
 	});
 
 	function handlePresetAmount(value: string) {
+		paymentError = '';
 		if (value === 'custom') {
 			isCustomAmount = true;
 			$formData.selectedPreset = undefined;
@@ -78,6 +71,7 @@
 	}
 
 	function handleCustomAmount(event: Event) {
+		paymentError = '';
 		const target = event.target as HTMLInputElement;
 		const value = parseInt(target.value, 10);
 
@@ -103,7 +97,7 @@
 <div class="bg-card brutal-lg p-5">
 	<h2 class="text-h3 text-ink mb-4">Make a donation</h2>
 
-	<form method="POST" use:enhance>
+	<form onsubmit={(event) => event.preventDefault()}>
 		<Field.FieldGroup>
 			<Field.Field data-invalid={$errors.name ? true : undefined}>
 				<Field.FieldLabel for="name" class="text-label">Name</Field.FieldLabel>
@@ -219,22 +213,25 @@
 					>
 						One-time
 					</ToggleGroup.Item>
-					<ToggleGroup.Item
-						value="monthly"
-						class="text-body font-bold"
-					>
-						Monthly
+					<ToggleGroup.Item value="monthly" disabled class="text-body font-bold">
+						Monthly (soon)
 					</ToggleGroup.Item>
 				</ToggleGroup.Root>
 			</Field.Field>
 
-			{#if $formData.amount}
+			{#if paymentError}
+				<Field.FieldError>{paymentError}</Field.FieldError>
+			{/if}
+
+			{#if $formData.amount && !quantityError}
 				<div class="pt-2">
 					<PaystackButton
+						name={$formData.name}
 						email={$formData.donationEmail}
+						message={$formData.message || ''}
 						amount={Number($formData.amount)}
-						publicKey={PUBLIC_PAYSTACK_PUBLIC_KEY}
-						text="Donate with Paystack"
+						donationType={$formData.selectedDonation || 'one-time'}
+						onError={(message) => (paymentError = message)}
 					/>
 				</div>
 			{/if}

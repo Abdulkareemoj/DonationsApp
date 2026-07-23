@@ -34,7 +34,7 @@ import TypingAnimation from '$lib/components/TypingAnimation.svelte';
 		},
 		{
 			q: "Can I donate monthly?",
-			a: "Yes. Pick 'Monthly' before checkout. You can cancel from your Paystack receipt anytime."
+			a: "Monthly support is coming soon. Donations are currently one-time."
 		},
 		{
 			q: "Where does the money go?",

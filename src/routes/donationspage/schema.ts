@@ -10,7 +10,7 @@ export const donationSchema = z.object({
 		.max(10000, { message: 'Maximum donation is ₦10,000' })
 		.optional(),
 	selectedPreset: z.number().optional(),
-	selectedDonation: z.enum(['one-time', 'monthly']).default('one-time').optional()
+	selectedDonation: z.literal('one-time').default('one-time').optional()
 });
 
 export type FormSchema = typeof donationSchema;

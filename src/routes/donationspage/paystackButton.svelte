@@ -1,72 +1,58 @@
-<!-- Inspiration from https://gist.github.com/struckchure/c99a975e9630a138eab522acf7579cda -->
-
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
-	import { onMount } from 'svelte';
+	import { Spinner } from '$lib/components/ui/spinner';
 
-	export let email: string;
-	export let amount: number; // in kobo (multiply by 100 for Naira)
-	export let reference: string = new Date().getTime().toString();
-	export let publicKey: string;
-	export let text: string = 'Pay with Paystack';
-	export let metadata: Record<string, any> = {};
+	let {
+		name,
+		email,
+		message = '',
+		amount,
+		donationType = 'one-time',
+		onError
+	}: {
+		name: string;
+		email: string;
+		message?: string;
+		amount: number;
+		donationType?: 'one-time' | 'monthly';
+		onError: (message: string) => void;
+	} = $props();
 
-	let isClient = false;
-	let PaystackPop: any;
+	let loading = $state(false);
 
-	onMount(() => {
-		isClient = true;
-		const script = document.createElement('script');
-		script.src = 'https://js.paystack.co/v1/inline.js';
-		script.async = true;
-		script.onload = () => {
-			PaystackPop = window.PaystackPop;
-		};
-		document.body.appendChild(script);
-	});
+	async function beginCheckout() {
+		loading = true;
+		onError('');
 
-	function initializePayment() {
-		if (!PaystackPop) {
-			console.error('Paystack not loaded');
-			return;
-		}
-
-		const handler = PaystackPop.setup({
-			key: publicKey,
-			email,
-			amount: amount * 100, // Convert amount to kobo
-			ref: reference,
-			metadata,
-			callback: function (response: any) {
-				const event = new CustomEvent('payment:success', {
-					detail: { reference: response.reference }
-				});
-				document.dispatchEvent(event);
-			},
-			onClose: function () {
-				const event = new CustomEvent('payment:close');
-				document.dispatchEvent(event);
+		try {
+			const response = await fetch('/api/payments/initialize', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ name, donationEmail: email, message, amount, selectedDonation: donationType })
+			});
+			const result = (await response.json()) as { authorizationUrl?: string; message?: string };
+			if (!response.ok || !result.authorizationUrl) {
+				throw new Error(result.message || 'Unable to start checkout. Please try again.');
 			}
-		});
 
-		handler.openIframe();
+			window.location.assign(result.authorizationUrl);
+		} catch (error) {
+			onError(error instanceof Error ? error.message : 'Unable to start checkout. Please try again.');
+			loading = false;
+		}
 	}
 </script>
 
 <Button
-	onclick={initializePayment}
-	disabled={!isClient || !PaystackPop}
+	type="button"
+	onclick={beginCheckout}
+	disabled={loading}
 	class="brutal-press w-full bg-primary text-ink text-body font-bold border-2 border-ink hover:bg-primary/90"
 >
-	{text}
-</Button>
-
-<svelte:head>
-	{#if isClient}
-		<script>
-			interface Window {
-				PaystackPop: any;
-			}
-		</script>
+	{#if loading}
+		<Spinner data-icon="inline-start" />
+		Preparing secure checkout…
+	{:else}
+		Donate securely with Paystack
 	{/if}
-</svelte:head>
+</Button>
