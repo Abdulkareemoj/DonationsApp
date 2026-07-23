@@ -50,14 +50,13 @@ cp .env.example .env
 Required:
 
 ```env
-# Paystack
-VITE_PAYSTACK_PUBLIC_KEY=pk_test_xxxxx
+# Paystack (keep the secret key server-only)
 PAYSTACK_SECRET_KEY=sk_test_xxxxx
 
-# Airtable
-AIRTABLE_API_KEY=xxxxx
-AIRTABLE_BASE_ID=xxxxx
-AIRTABLE_TABLE_NAME=Donations
+# Airtable (keep the token server-only)
+AIRTABLE_TOKEN=pat_xxxxx
+AIRTABLE_BASE_ID=app_xxxxx
+AIRTABLE_TABLE_NAME=Donors
 ```
 
 Optional (branding):
@@ -83,18 +82,18 @@ Open [http://localhost:5173/donationspage](http://localhost:5173/donationspage).
 
 ## Airtable Setup
 
-Create a table named `Donations` (or set `AIRTABLE_TABLE_NAME`) with these fields:
+Create a table named `Donors` (or set `AIRTABLE_TABLE_NAME` to your exact existing table name) with these fields:
 
 | Field       | Type   |
 | ----------- | ------ |
 | Name        | Text   |
 | Email       | Email  |
 | Amount      | Number |
-| Frequency   | Select |
+| Frequency   | Select (`one-time`) / (`monthly`) |
 | Message     | Text   |
 | Reference   | Text   |
 | Date        | Date   |
-| Status      | Select |
+| Status      | Select (`verified`) / (`pending`)|
 
 ## Pages
 
